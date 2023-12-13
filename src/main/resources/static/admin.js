@@ -223,6 +223,10 @@ function createTrTagsForRoles(allRoles) {
         newTr.innerHTML = document.getElementById('right_block_role_tr_template').innerHTML
             .replaceAll('template', i.toString())
         document.getElementById('right_block_tab_roles').appendChild(newTr)
+        if (allRoles[i].name === 'ADMIN') {
+            document.getElementById('role_edit_' + i).disabled = true
+            document.getElementById('role_delete_' + i).disabled = true
+        }
         document.getElementById('role_id_' + i.toString()).textContent = allRoles[i].id
         document.getElementById('role_name_' + i.toString()).textContent = allRoles[i].name
     }
