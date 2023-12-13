@@ -187,6 +187,7 @@ function newRoleClick() {
     deactivateAndHideAllTabs()
     document.getElementById('right_block_new_role_link')
         .setAttribute('class', 'nav-link active disabled')
+    document.getElementById('name').value = ''
     document.getElementById('new_role_panel').hidden = false
 }
 
@@ -213,21 +214,5 @@ function createOptionTags(parentSelectId, allRoles) {
         option.textContent = allRoles[i].name
         option.hidden = false
         select.appendChild(option)
-    }
-}
-function createTrTagsForRoles(allRoles) {
-    for (let i in allRoles) {
-        const newTr = document.createElement('tr')
-        newTr.setAttribute('class', 'right_block_role')
-        newTr.setAttribute('id', 'right_block_role_' + allRoles[i].name)
-        newTr.innerHTML = document.getElementById('right_block_role_tr_template').innerHTML
-            .replaceAll('template', i.toString())
-        document.getElementById('right_block_tab_roles').appendChild(newTr)
-        if (allRoles[i].name === 'ADMIN') {
-            document.getElementById('role_edit_' + i).disabled = true
-            document.getElementById('role_delete_' + i).disabled = true
-        }
-        document.getElementById('role_id_' + i.toString()).textContent = allRoles[i].id
-        document.getElementById('role_name_' + i.toString()).textContent = allRoles[i].name
     }
 }

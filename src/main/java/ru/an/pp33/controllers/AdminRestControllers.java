@@ -4,8 +4,10 @@ import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.an.pp33.dto.RoleDto;
 import ru.an.pp33.dto.UserDto;
 import ru.an.pp33.helper.UserUtils;
+import ru.an.pp33.mapper.RoleMapper;
 import ru.an.pp33.mapper.UserMapper;
 import ru.an.pp33.models.Role;
 import ru.an.pp33.models.User;
@@ -79,5 +81,11 @@ public class AdminRestControllers {
         userUtils.setUsersParentAdminId(user, me);
         userService.saveUser(user);
         return user.getPassword();
+    }
+
+    @PostMapping("/save-role")
+    public String saveRole(@RequestBody RoleDto roleDto) {
+        Role role = RoleMapper.toRole(roleDto);
+        return String.valueOf(roleService.saveRole(role));
     }
 }

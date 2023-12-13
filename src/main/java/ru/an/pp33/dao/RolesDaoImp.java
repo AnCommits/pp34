@@ -16,8 +16,9 @@ public class RolesDaoImp implements RoleDao{
     private EntityManager entityManager;
 
     @Override
-    public void saveRole(Role role) {
+    public long saveRole(Role role) {
         entityManager.persist(role);
+        return getRoleByName(role.getName()).getId();
     }
 
     @Override
@@ -36,7 +37,7 @@ public class RolesDaoImp implements RoleDao{
 
     @Override
     public List<Role> getAllRoles() {
-        String hql = "FROM Role";
+        String hql = "FROM Role r ORDER BY r.id";
         TypedQuery<Role> query = entityManager.createQuery(hql, Role.class);
         return query.getResultList();
     }
