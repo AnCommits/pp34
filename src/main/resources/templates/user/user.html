@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <title>Страница администратора</title>
+</head>
+<body class="container-fluid bg-white">
+
+<!------------- Header > > > ------------->
+<header class="navbar bg-dark mx-n3">
+    <div class="text-white" style="font-size: larger; padding: 2px 4px">
+        <b id="header_my_email"></b> with roles: <span id="header_my_roles"></span>
+    </div>
+    <a class="text-white-50" href="/logout">Logout</a>
+</header>
+<!------------- < < < Header ------------->
+
+<main class="row">
+
+    <!------------- Left block > > > -------------->
+    <div class="col-2 bg-white pt-3 px-0">
+        <nav class="nav nav-pills flex-column">
+            <a class="nav-link active disabled" href="#" id="left_block_me"></a>
+        </nav>
+    </div>
+    <!------------- < < < Left block ------------->
+
+    <!------------- Right block > > > ------------->
+    <div class="col-10 bg-light" style="padding: 12px 28px; height: 100vh">
+        <h1>Страница пользователя</h1>
+        <div style="border-bottom: 1px solid #dadada">
+            <ul class="nav nav-tabs">
+                <li class="nav-item w-100 text-dark lead">
+                    <a class="nav-link active disabled bg-light w-100 font-weight-bold float-left" href="#">
+                        О пользователе</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bg-white py-3 px-4 border">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Возраст</th>
+                    <th>Емэйл</th>
+                    <th style="width: 160px">Роли</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td id="right_block_id"></td>
+                    <td id="right_block_firstname"></td>
+                    <td id="right_block_lastname"></td>
+                    <td id="right_block_age"></td>
+                    <td id="right_block_email"></td>
+                    <td>
+                        <ul id="right_block_roles" class="list-group" style="list-style-type: none"></ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!------------- < < <   Right block  ------------->
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="start.js"></script>
+</body>
+</html>
