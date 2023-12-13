@@ -178,25 +178,68 @@
 
         <!------------- Roles block > > > ------------->
         <div class="tabsContent" id="roles_panel" hidden>
-
             <ul class="nav nav-tabs font-weight-bold border-bottom">
                 <li class="nav-item text-dark w-100">
                     <a class="nav-link active disabled bg-light h5" href="#">Роли</a>
                 </li>
             </ul>
 
+            <div class="bg-white border py-3 px-4">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+<!--                        <th style="min-width: 320px">Пользователи</th>-->
+                    </tr>
+                    </thead>
+
+                    <!-- About role -->
+                    <tbody id="right_block_about_roles">
+<!--                    <tr class="bg-light" id="right_block_user" hidden>-->
+<!--                        <td id="right_block_id"></td>-->
+<!--                        <td id="right_block_firstname"></td>-->
+<!--                        <td id="right_block_lastname"></td>-->
+<!--                        <td id="right_block_age"></td>-->
+<!--                        <td id="right_block_email"></td>-->
+<!--                        <td>-->
+<!--                            <ul id="right_block_roles" class="list-group" style="list-style-type: none"></ul>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+                    <!--  Roles -->
+                    <tr id="right_block_role_tr_template" hidden>
+                        <td id="role_id_template"></td>
+                        <td id="role_name_template"></td>
+<!--                        <td>-->
+<!--                            <ul id="role_template" class="list-group" style="list-style-type: none"></ul>-->
+<!--                        </td>-->
+                        <td>
+                            <button type="button" class="btn btn-info" data-id="template" id="role_edit_template"
+                                    data-toggle="modal" data-target="#roleDialog" data-action="update">
+                                Редактировать
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-id="template" id="role_delete_template"
+                                    data-toggle="modal" data-target="#roleDialog" data-action="delete">
+                                Удалить
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!------------- < < < Roles block ------------->
 
         <!------------- New role block > > > ------------->
         <div class="tabsContent" id="new_role_panel" hidden>
-
             <ul class="nav nav-tabs font-weight-bold border-bottom">
                 <li class="nav-item text-dark w-100">
                     <a class="nav-link active disabled bg-light h5" href="#">Зарегистрировать роль</a>
                 </li>
             </ul>
-
         </div>
         <!------------- < < < New role block ------------->
 
