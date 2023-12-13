@@ -2,7 +2,6 @@ package ru.an.pp33.init;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.an.pp33.constants.RolesType;
 import ru.an.pp33.models.Role;
 import ru.an.pp33.models.User;
 import ru.an.pp33.service.RoleService;
@@ -27,9 +26,11 @@ public class InitDataBase {
     @PostConstruct
     public void init() {
         List<Role> allRoles = roleService.getAllRoles();
-        if (allRoles.isEmpty()) {
-            List<String> allRolesNames = RolesType.allRolesNames;
-            allRolesNames.stream().map(Role::new).forEach(roleService::saveRole);
+        if (allRoles == null || allRoles.isEmpty()) {
+            roleService.saveRole(new Role("ADMIN"));
+            roleService.saveRole(new Role("USER"));
+//            List<String> allRolesNames = RolesType.allRolesNames;
+//            allRolesNames.stream().map(Role::new).forEach(roleService::saveRole);
         }
         if (userService.countUsers() == 0) {
             Role role1 = roleService.getRoleByName("ADMIN");

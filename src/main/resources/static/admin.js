@@ -9,8 +9,8 @@ async function adminPage(myId) {
         })
 
         const allRoles = await loadAllRoles()
-        createTrTagsForRoles(allRoles)
         document.getElementById('roles_number').textContent = allRoles.length
+        createTrTagsForRoles(allRoles)
         createOptionTags('new_user_roles', allRoles)
         createOptionTags('modal_roles', allRoles)
     } else {
@@ -210,34 +210,20 @@ function createOptionTags(parentSelectId, allRoles) {
     for (let i in allRoles) {
         const option = option_template.cloneNode(true)
         option.id = 'option_' + parentSelectId + '_' + i
-        option.textContent = allRoles[i]
+        option.textContent = allRoles[i].name
         option.hidden = false
         select.appendChild(option)
     }
 }
-
 function createTrTagsForRoles(allRoles) {
     for (let i in allRoles) {
         const newTr = document.createElement('tr')
         newTr.setAttribute('class', 'right_block_role')
-        newTr.setAttribute('id', 'right_block_role_' + allRoles[i])
-        // console.log(newTr)
-
-        // const option = option_template.cloneNode(true)
-        // option.id = 'option_' + parentSelectId + '_' + i
-        // option.textContent = allRoles[i]
-        // option.hidden = false
-        // select.appendChild(option)
+        newTr.setAttribute('id', 'right_block_role_' + allRoles[i].name)
+        newTr.innerHTML = document.getElementById('right_block_role_tr_template').innerHTML
+            .replaceAll('template', i.toString())
+        document.getElementById('right_block_tab_roles').appendChild(newTr)
+        document.getElementById('role_id_' + i.toString()).textContent = allRoles[i].id
+        document.getElementById('role_name_' + i.toString()).textContent = allRoles[i].name
     }
-
-    // newTr.setAttribute('id', 'right_block_role_' + allRoles.id)
-    // newTr.innerHTML = document.getElementById('right_block_role_tr_template').innerHTML
-    //     .replaceAll('template', user.id.toString())
-    // document.getElementById('right_block_users').appendChild(newTr)
-    //
-    // document.getElementById('user_id_' + user.id).textContent = user.id.toString()
-    // document.getElementById('user_firstname_' + user.id).textContent = user.firstname
-
-    // const userHasRoleAdmin = putRolesIntoLiTagsAndCheckAdmin('user_roles_' + user.id, user)
-    // }
 }

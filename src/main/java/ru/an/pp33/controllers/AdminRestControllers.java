@@ -4,11 +4,12 @@ import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.an.pp33.constants.RolesType;
 import ru.an.pp33.dto.FrontUser;
 import ru.an.pp33.helper.UserUtils;
 import ru.an.pp33.mapper.UserMapper;
+import ru.an.pp33.models.Role;
 import ru.an.pp33.models.User;
+import ru.an.pp33.service.RoleService;
 import ru.an.pp33.service.UserService;
 
 import java.util.List;
@@ -18,11 +19,14 @@ import java.util.List;
 @RequestMapping("/admin/api")
 public class AdminRestControllers {
     private final UserService userService;
+    private final RoleService roleService;
     private final UserUtils userUtils;
     private final PasswordEncoder passwordEncoder;
 
-    public AdminRestControllers(UserService userService, UserUtils userUtils, PasswordEncoder passwordEncoder) {
+    public AdminRestControllers(UserService userService, RoleService roleService,
+                                UserUtils userUtils, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.roleService = roleService;
         this.userUtils = userUtils;
         this.passwordEncoder = passwordEncoder;
     }
@@ -37,8 +41,8 @@ public class AdminRestControllers {
     }
 
     @GetMapping("/all-roles")
-    public List<String> getAllRoles() {
-        return RolesType.allRolesNames;
+    public List<Role> getAllRoles() {
+        return roleService.getAllRoles();
     }
 
     @PutMapping("/lock/{id}")
