@@ -121,23 +121,21 @@ function leftBlockUserClickRebuildRightBlock(id) {
 function left_block_admin_click() {
     leftBlockUserClickRebuildLeftBlock(0)
     rightBlockAdminClickRebuildRightBlock()
-    document.getElementById('right_block_tab_users').hidden = false
-    document.getElementById('right_block_tab_new_user').hidden = false
 }
 
 function rightBlockAdminClickRebuildRightBlock() {
-    document.getElementById('new_user_panel').hidden = true
-    document.getElementById('right_block_user').hidden = true
-    const adminColumn = document.getElementsByClassName('admin_column')
-    for (let i in adminColumn) {
-        adminColumn[i].hidden = false
-    }
+    document.getElementById('user_info_page').hidden = true
+    document.getElementById('admin_panel').hidden = false
     const trTags = document.getElementsByClassName('right_block_user')
     for (let i in trTags) {
         trTags[i].hidden = false
     }
+    const adminColumn = document.getElementsByClassName('admin_column')
+    for (let i in adminColumn) {
+        adminColumn[i].hidden = false
+    }
     document.getElementById('title2').textContent = 'Пользователи'
-
+    document.getElementById('right_block_user').hidden = true
 }
 
 async function lock_click(id) {
