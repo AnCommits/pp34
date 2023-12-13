@@ -88,7 +88,7 @@ $('#update-user-button').click(async function () {
         descendant: adminStatusChanged
     }
 
-    let response = await fetch('/admin/api/update', {
+    let response = await fetch('/api/admin/update', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json; charset=utf-8'},
         body: JSON.stringify(user)
@@ -119,7 +119,7 @@ $('#delete-user-button').click(async function () {
     const modal = $('#userDialog')
     const id = modal.find('#user-id').val()
 
-    const response = await fetch('/admin/api/delete/' + id, {
+    const response = await fetch('/api/admin/delete/' + id, {
         method: 'DELETE'
     })
     if (response.ok) {

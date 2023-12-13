@@ -26,7 +26,7 @@ async function saveNewUserClick() {
         descendant: true // for view (not for saving)
     }
 
-    const response = await fetch('/admin/api/save-user', {
+    const response = await fetch('/api/admin/save-user', {
         method: 'POST',
         headers: {'Content-Type': 'application/json; charset=utf-8'},
         body: JSON.stringify(user)

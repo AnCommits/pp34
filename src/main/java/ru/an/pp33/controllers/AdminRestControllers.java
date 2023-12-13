@@ -16,7 +16,7 @@ import java.util.List;
 
 @Data
 @RestController
-@RequestMapping("/admin/api")
+@RequestMapping("/api/admin")
 public class AdminRestControllers {
     private final UserService userService;
     private final RoleService roleService;

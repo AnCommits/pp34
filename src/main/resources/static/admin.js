@@ -1,6 +1,6 @@
 async function adminPage(myId) {
     document.getElementById('my_id').textContent = myId
-    const responseUsers = await fetch('/admin/api/get-all-users')
+    const responseUsers = await fetch('/api/admin/get-all-users')
     if (responseUsers.ok) {
         const users = await responseUsers.json()
         users.forEach(user => {
@@ -58,7 +58,7 @@ function putUserInRightBlock(user, myId) {
 }
 
 async function loadAllRoles() {
-    const responseRoles = await fetch('/admin/api/all-roles')
+    const responseRoles = await fetch('/api/admin/all-roles')
     if (responseRoles.ok) {
         return await responseRoles.json()
     } else {
@@ -143,7 +143,7 @@ function rightBlockAdminClickRebuildRightBlock() {
 }
 
 async function lockClick(id) {
-    const response = await fetch('/admin/api/lock/' + id, {
+    const response = await fetch('/api/admin/lock/' + id, {
         method: 'PUT',
         body: document.getElementById('user_locked_' + id).checked
     })

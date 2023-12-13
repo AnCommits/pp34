@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.an.pp33.models.User;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class RestControllers {
 
     @GetMapping("/get-me")

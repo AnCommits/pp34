@@ -1,5 +1,5 @@
 window.onload = async function () {
-    const responseMe = await fetch('/api/get-me')
+    const responseMe = await fetch('/api/user/get-me')
     if (responseMe.ok) {
         const me = await responseMe.json()
         putEmailAndRolesInHeader(me)
