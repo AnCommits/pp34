@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.an.pp33.dto.FrontUser;
+import ru.an.pp33.dto.UserDto;
 import ru.an.pp33.helper.UserUtils;
 import ru.an.pp33.mapper.UserMapper;
 import ru.an.pp33.models.Role;
@@ -58,7 +58,7 @@ public class AdminRestControllers {
     }
 
     @PostMapping("/save-user")
-    public String saveUser(@RequestBody FrontUser userDto, Authentication authentication) {
+    public String saveUser(@RequestBody UserDto userDto, Authentication authentication) {
         User me = (User) authentication.getPrincipal();
         User user = UserMapper.toUser(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -68,7 +68,7 @@ public class AdminRestControllers {
     }
 
     @PutMapping("/update")
-    public String updateUser(@RequestBody FrontUser userDto, Authentication authentication) {
+    public String updateUser(@RequestBody UserDto userDto, Authentication authentication) {
         User me = (User) authentication.getPrincipal();
         User user = UserMapper.toUser(userDto);
         String oldPassword = userService.getUserById(user.getId()).getPassword();

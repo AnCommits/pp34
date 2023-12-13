@@ -8,7 +8,7 @@ import ru.an.pp33.models.Role;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class RoleServiceImp implements RoleService{
 
     private final RoleDao roleDao;
@@ -17,6 +17,7 @@ public class RoleServiceImp implements RoleService{
         this.roleDao = roleDao;
     }
 
+    @Transactional
     @Override
     public void saveRole(Role role) {
         roleDao.saveRole(role);

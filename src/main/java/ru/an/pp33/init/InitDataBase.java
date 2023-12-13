@@ -29,8 +29,6 @@ public class InitDataBase {
         if (allRoles == null || allRoles.isEmpty()) {
             roleService.saveRole(new Role("ADMIN"));
             roleService.saveRole(new Role("USER"));
-//            List<String> allRolesNames = RolesType.allRolesNames;
-//            allRolesNames.stream().map(Role::new).forEach(roleService::saveRole);
         }
         if (userService.countUsers() == 0) {
             Role role1 = roleService.getRoleByName("ADMIN");

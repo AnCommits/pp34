@@ -169,7 +169,7 @@
                         <option class="option" id="option_template_new_user_roles" hidden></option>
                     </select>
                 </div>
-                <button type="button" class="btn btn-success" onclick="saveNewUserClick()">
+                <button type="button" class="btn btn-success mt-3" onclick="saveNewUserClick()">
                     Зарегистрировать
                 </button>
             </div>
@@ -190,8 +190,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Название</th>
-                        <!--                        Здесь пользователи нужны ?  -->
-                        <!--                        <th style="min-width: 320px">Пользователи</th>-->
                         <th class="admin_roles_column">Переименовать</th>
                         <th class="admin_roles_column">Удалить</th>
                     </tr>
@@ -237,6 +235,17 @@
                     <a class="nav-link active disabled bg-light h5" href="#">Зарегистрировать роль</a>
                 </li>
             </ul>
+
+            <div class="bg-white text-center font-weight-bold border py-3">
+                <div class="form-group input-group-sm m-auto" style="width: 300px">
+                    <label for="name" class="m-0">Название*</label>
+                    <input type="text" class="form-control" id="name" placeholder="Название роли"
+                           name="firstname">
+                </div>
+                <button type="button" class="btn btn-success mt-3" onclick="saveNewRoleClick()">
+                    Зарегистрировать
+                </button>
+            </div>
         </div>
         <!------------- < < < New role block ------------->
 

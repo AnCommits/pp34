@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Set;
 
 @Data
-public class FrontUser {
+public class UserDto {
     private long id;
     private String firstname;
     private String lastname;
