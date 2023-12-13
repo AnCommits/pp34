@@ -21,34 +21,44 @@
 
 <main class="row">
 
-    <!------------- Left block > > > -------------->
+    <!------------- Left block - Users > > > -------------->
     <div class="col-2 pt-3 px-0">
         <nav class="nav nav-pills flex-column bg-white" id="left_block">
             <a class="nav-link active disabled" href="#" onclick='left_block_admin_click()'
                id="left_block_user_0">Администратор</a>
         </nav>
     </div>
-    <!------------- < < < Left block ------------->
+    <!------------- < < < Left block - Users > > > ------------->
 
-    <!------------- Right block > > > ------------->
+    <!------------- Right block - Users > > > ------------->
     <div class="col-10 bg-light py-3 px-4" style="height: 100vh">
 
-        <!------------- Users block > > > ------------->
-        <div id="users_panel">
-            <h1>Панель администратора</h1>
-            <ul class="nav nav-tabs pt-2" id="right_block_tab_users">
-                <li class="nav-item">
-                    <a class="nav-link active disabled" href="#">Список пользователей</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="new_user_click()">Новый пользователь</a>
-                </li>
-            </ul>
+        <h1>Панель администратора</h1>
+        <ul class="nav nav-tabs pt-2" id="right_block_tab_users">
+            <li class="nav-item">
+                <a id="right_block_users_link" class="nav-link active disabled" href="#" onclick="users_click()">
+                    Список пользователей
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="right_block_new_user_link" class="nav-link" href="#" onclick="new_user_click()">
+                    Новый пользователь
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="right_block_roles_link" class="nav-link" href="#" onclick="roles_click()">Список ролей</a>
+            </li>
+            <li class="nav-item">
+                <a id="right_block_new_role_link" class="nav-link" href="#" onclick="new_role_click()">Новая роль</a>
+            </li>
+        </ul>
 
+        <!------------- Users block > > > ------------->
+        <div class="tabsContent" id="users_panel">
             <div class="border-bottom">
                 <ul class="nav nav-tabs font-weight-bold">
                     <li class="nav-item text-dark w-100">
-                        <a class="nav-link active disabled bg-light h5" href="#" id="title2">Пользователи</a>
+                        <a class="nav-link active disabled bg-light h5" href="#">Пользователи</a>
                     </li>
                 </ul>
             </div>
@@ -121,16 +131,16 @@
         <!------------- < < < Users block ------------->
 
         <!------------- New user block > > > ------------->
-        <div id="new_user_panel" hidden>
-            <h1>Панель администратора</h1>
-            <ul class="nav nav-tabs pt-2" id="right_block_tab_new_user">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="users_click()">Список пользователей</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active disabled" href="#">Новый пользователь</a>
-                </li>
-            </ul>
+        <div class="tabsContent" id="new_user_panel" hidden>
+            <!--            <h1>Панель администратора</h1>-->
+            <!--            <ul class="nav nav-tabs pt-2" id="right_block_tab_new_user">-->
+            <!--                <li class="nav-item">-->
+            <!--                    <a class="nav-link" href="#" onclick="users_click()">Список пользователей</a>-->
+            <!--                </li>-->
+            <!--                <li class="nav-item">-->
+            <!--                    <a class="nav-link active disabled" href="#">Новый пользователь</a>-->
+            <!--                </li>-->
+            <!--            </ul>-->
 
             <div class="border-bottom">
                 <ul class="nav nav-tabs font-weight-bold">
@@ -179,6 +189,135 @@
             </div>
         </div>
         <!------------- < < < New user block ------------->
+
+        <!------------- Roles block > > > ------------->
+        <div class="tabsContent" id="roles_panel" hidden>
+
+            <div class="border-bottom">
+                <ul class="nav nav-tabs font-weight-bold">
+                    <li class="nav-item text-dark w-100">
+                        <a class="nav-link active disabled bg-light h5" href="#">Роли</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--            <div class="bg-white border py-3 px-4">-->
+            <!--                <table class="table table-striped">-->
+            <!--                    <thead>-->
+            <!--                    <tr>-->
+            <!--                        <th>ID</th>-->
+            <!--                        <th>Имя</th>-->
+            <!--                        <th>Фамилия</th>-->
+            <!--                        <th>Возраст</th>-->
+            <!--                        <th>Е&#8288;&#8209;&#8288;мэйл</th>-->
+            <!--                        <th style="min-width: 160px">Роли</th>-->
+            <!--                        <th class="admin_column">Заблокирован</th>-->
+            <!--                        <th class="admin_column">Редактировать</th>-->
+            <!--                        <th class="admin_column">Удалить</th>-->
+            <!--                    </tr>-->
+            <!--                    </thead>-->
+
+            <!--                    &lt;!&ndash; About user &ndash;&gt;-->
+            <!--                    <tbody id="right_block_users">-->
+            <!--                    <tr class="bg-light" id="right_block_user" hidden>-->
+            <!--                        <td id="right_block_id"></td>-->
+            <!--                        <td id="right_block_firstname"></td>-->
+            <!--                        <td id="right_block_lastname"></td>-->
+            <!--                        <td id="right_block_age"></td>-->
+            <!--                        <td id="right_block_email"></td>-->
+            <!--                        <td>-->
+            <!--                            <ul id="right_block_roles" class="list-group" style="list-style-type: none"></ul>-->
+            <!--                        </td>-->
+            <!--                    </tr>-->
+
+            <!--                    &lt;!&ndash;  Users &ndash;&gt;-->
+            <!--                    <tr id="right_block_tr_template" hidden>-->
+            <!--                        <td id="user_id_template"></td>-->
+            <!--                        <td id="user_firstname_template"></td>-->
+            <!--                        <td id="user_lastname_template"></td>-->
+            <!--                        <td>-->
+            <!--                            <span id="user_age_template"></span>-->
+            <!--                            <span hidden id="user_birthdate_template"></span>-->
+            <!--                            <span hidden id="user_password_template"></span>-->
+            <!--                            <span hidden id="user_parent_id_template"></span>-->
+            <!--                        </td>-->
+            <!--                        <td class="class_email" id="user_email_template"></td>-->
+            <!--                        <td>-->
+            <!--                            <ul id="user_roles_template" class="list-group" style="list-style-type: none"></ul>-->
+            <!--                        </td>-->
+            <!--                        <td>-->
+            <!--                            <input type="checkbox" class="checkbox" style="height: 24px; width: 24px"-->
+            <!--                                   onclick="lock_click(template)" id="user_locked_template">-->
+            <!--                        </td>-->
+            <!--                        <td>-->
+            <!--                            <button type="button" class="btn btn-info" data-id="template" id="user_edit_template"-->
+            <!--                                    data-toggle="modal" data-target="#userDialog" data-action="update">-->
+            <!--                                Редактировать-->
+            <!--                            </button>-->
+            <!--                        </td>-->
+            <!--                        <td>-->
+            <!--                            <button type="button" class="btn btn-danger" data-id="template" id="user_delete_template"-->
+            <!--                                    data-toggle="modal" data-target="#userDialog" data-action="delete">-->
+            <!--                                Удалить-->
+            <!--                            </button>-->
+            <!--                        </td>-->
+            <!--                    </tr>-->
+            <!--                    </tbody>-->
+            <!--                </table>-->
+            <!--            </div>-->
+        </div>
+        <!------------- < < < Roles block ------------->
+
+        <!------------- New role block > > > ------------->
+        <div class="tabsContent" id="new_role_panel" hidden>
+
+            <div class="border-bottom">
+                <ul class="nav nav-tabs font-weight-bold">
+                    <li class="nav-item text-dark w-100">
+                        <a class="nav-link active disabled bg-light h5" href="#">
+                            Зарегистрировать роль
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--            <div class="bg-white text-center font-weight-bold border py-3">-->
+            <!--                <div class="form-group input-group-sm m-auto" style="width: 300px">-->
+            <!--                    <label for="firstname" class="m-0">Имя*</label>-->
+            <!--                    <input type="text" class="form-control" id="firstname" placeholder="Имя"-->
+            <!--                           name="firstname">-->
+            <!--                </div>-->
+            <!--                <div class="form-group input-group-sm m-auto" style="width: 300px">-->
+            <!--                    <label for="lastname" class="m-0">Фамилия*</label>-->
+            <!--                    <input type="text" class="form-control" id="lastname" placeholder="Фамилия"-->
+            <!--                           name="lastname">-->
+            <!--                </div>-->
+            <!--                <div class="form-group input-group-sm m-auto" style="width: 300px">-->
+            <!--                    <label for="birthdate" class="m-0">Дата рождения</label>-->
+            <!--                    <input type="date" class="form-control" id="birthdate" name="birthdate">-->
+            <!--                </div>-->
+            <!--                <div class="form-group input-group-sm m-auto" style="width: 300px">-->
+            <!--                    <label for="email" class="m-0">Электронная почта*</label>-->
+            <!--                    <input type="email" class="form-control" id="email" placeholder="Электронная почта"-->
+            <!--                           name="email">-->
+            <!--                </div>-->
+            <!--                <div class="form-group input-group-sm m-auto" style="width: 300px">-->
+            <!--                    <label for="password" class="m-0">Пароль*</label>-->
+            <!--                    <input type="password" class="form-control" id="password" placeholder="Пароль"-->
+            <!--                           name="password">-->
+            <!--                </div>-->
+            <!--                <div class="form-group m-auto" style="width: 300px">-->
+            <!--                    <label for="new_user_roles" class="m-0">Роли</label>-->
+            <!--                    <select class="form-control" id="new_user_roles" name="roles" multiple>-->
+            <!--                        <option class="option" id="option_template_new_user_roles" hidden></option>-->
+            <!--                    </select>-->
+            <!--                </div>-->
+            <!--                <button type="button" class="btn btn-success" onclick="save_new_user_click()">-->
+            <!--                    Зарегистрировать-->
+            <!--                </button>-->
+            <!--            </div>-->
+        </div>
+        <!------------- < < < New role block ------------->
 
     </div>
     <!------------- < < <   Right block  ------------->

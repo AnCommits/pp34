@@ -151,6 +151,10 @@ async function lock_click(id) {
 }
 
 function new_user_click() {
+    deactivateAndHideAllTabs()
+    document.getElementById('right_block_new_user_link')
+        .setAttribute('class', 'nav-link active disabled')
+
     document.getElementById('firstname').value = ''
     document.getElementById('lastname').value = ''
     document.getElementById('birthdate').value = ''
@@ -160,13 +164,41 @@ function new_user_click() {
     for (let i = 0; i < rolesNumber; i++) {
         document.getElementById('option_new_user_roles_' + i).selected = false
     }
-    document.getElementById('users_panel').hidden = true
     document.getElementById('new_user_panel').hidden = false
 }
 
 function users_click() {
-    document.getElementById('new_user_panel').hidden = true
+    deactivateAndHideAllTabs()
+    document.getElementById('right_block_users_link')
+        .setAttribute('class', 'nav-link active disabled')
     document.getElementById('users_panel').hidden = false
+}
+
+function roles_click() {
+    deactivateAndHideAllTabs()
+    document.getElementById('right_block_roles_link')
+        .setAttribute('class', 'nav-link active disabled')
+    document.getElementById('roles_panel').hidden = false
+}
+
+function new_role_click() {
+    deactivateAndHideAllTabs()
+    document.getElementById('right_block_new_role_link')
+        .setAttribute('class', 'nav-link active disabled')
+    document.getElementById('new_role_panel').hidden = false
+}
+
+function deactivateAndHideAllTabs() {
+    const navItems = document.getElementById('right_block_tab_users')
+        .getElementsByClassName('nav-link')
+    for (let i = 0; i < navItems.length; i++) {
+        navItems[i].setAttribute('class', 'nav-link')
+    }
+
+    const tabsContents = document.getElementsByClassName('tabsContent')
+    for (let i = 0; i < tabsContents.length; i++) {
+        tabsContents[i].hidden = true
+    }
 }
 
 function createOptionTags(parentSelectId, allRoles) {
