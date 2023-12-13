@@ -118,8 +118,11 @@ function leftBlockUserClickRebuildRightBlock(id) {
     document.getElementById('right_block_user').hidden = false
 }
 
-function left_block_admin_click() {
+function leftBlockAdminClick() {
     leftBlockUserClickRebuildLeftBlock(0)
+    document.getElementById('right_block_users_link')
+        .setAttribute('class', 'nav-link active disabled')
+    document.getElementById('right_block_tab_users').hidden = false
     rightBlockAdminClickRebuildRightBlock()
 }
 
@@ -138,7 +141,7 @@ function rightBlockAdminClickRebuildRightBlock() {
     document.getElementById('right_block_user').hidden = true
 }
 
-async function lock_click(id) {
+async function lockClick(id) {
     const response = await fetch('/admin/api/lock/' + id, {
         method: 'PUT',
         body: document.getElementById('user_locked_' + id).checked
@@ -148,14 +151,14 @@ async function lock_click(id) {
     }
 }
 
-function users_click() {
+function usersClick() {
     deactivateAndHideAllTabs()
     document.getElementById('right_block_users_link')
         .setAttribute('class', 'nav-link active disabled')
     document.getElementById('users_panel').hidden = false
 }
 
-function new_user_click() {
+function newUserClick() {
     deactivateAndHideAllTabs()
     document.getElementById('right_block_new_user_link')
         .setAttribute('class', 'nav-link active disabled')
@@ -172,14 +175,14 @@ function new_user_click() {
     document.getElementById('new_user_panel').hidden = false
 }
 
-function roles_click() {
+function rolesClick() {
     deactivateAndHideAllTabs()
     document.getElementById('right_block_roles_link')
         .setAttribute('class', 'nav-link active disabled')
     document.getElementById('roles_panel').hidden = false
 }
 
-function new_role_click() {
+function newRoleClick() {
     deactivateAndHideAllTabs()
     document.getElementById('right_block_new_role_link')
         .setAttribute('class', 'nav-link active disabled')

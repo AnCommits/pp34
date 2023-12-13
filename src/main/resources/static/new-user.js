@@ -1,4 +1,4 @@
-async function save_new_user_click() {
+async function saveNewUserClick() {
     let id = 0
     const firstname = document.getElementById('firstname').value
     const lastname = document.getElementById('lastname').value
@@ -37,7 +37,7 @@ async function save_new_user_click() {
         user.password = usersParts.password
         putUserInLeftBlock(user)
         putUserInRightBlock(user, Number(document.getElementById('my_id')))
-        users_click()
+        usersClick()
     } else {
         alert('Ошибка HTTP: ' + response.status)
     }
