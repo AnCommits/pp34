@@ -67,10 +67,13 @@ async function loadAllRoles() {
 }
 
 function leftBlockUserClick(id) {
-    document.getElementById('new_user_panel').hidden = true
-    document.getElementById('users_panel').hidden = false
+    document.getElementById('admin_panel').hidden = true
+    document.getElementById('user_info_page').hidden = false
     leftBlockUserClickRebuildLeftBlock(id)
+    deactivateAndHideAllTabs()
+    document.getElementById('right_block_tab_users').hidden = true
     leftBlockUserClickRebuildRightBlock(id)
+    document.getElementById('users_panel').hidden = false
 }
 
 function leftBlockUserClickRebuildLeftBlock(id) {
@@ -84,7 +87,6 @@ function leftBlockUserClickRebuildLeftBlock(id) {
 }
 
 function leftBlockUserClickRebuildRightBlock(id) {
-    document.getElementById('new_user_panel').hidden = true
     const trTags = document.getElementsByClassName('right_block_user')
     for (let i in trTags) {
         trTags[i].hidden = true
@@ -93,12 +95,8 @@ function leftBlockUserClickRebuildRightBlock(id) {
     for (let i in adminColumn) {
         adminColumn[i].hidden = true
     }
-    document.getElementById('right_block_tab_users').hidden = true
-    document.getElementById('right_block_tab_new_user').hidden = true
-
     document.getElementById('title2').textContent = 'О пользователе'
 
-    document.getElementById('right_block_user').hidden = false
     document.getElementById('right_block_id').textContent = id
     document.getElementById('right_block_firstname').textContent =
         document.getElementById('user_firstname_' + id).textContent
@@ -116,6 +114,8 @@ function leftBlockUserClickRebuildRightBlock(id) {
     }
     const user = {id: id, roles: roles}
     putRolesIntoLiTagsAndCheckAdmin('right_block_roles', user)
+
+    document.getElementById('right_block_user').hidden = false
 }
 
 function left_block_admin_click() {
@@ -150,6 +150,13 @@ async function lock_click(id) {
     }
 }
 
+function users_click() {
+    deactivateAndHideAllTabs()
+    document.getElementById('right_block_users_link')
+        .setAttribute('class', 'nav-link active disabled')
+    document.getElementById('users_panel').hidden = false
+}
+
 function new_user_click() {
     deactivateAndHideAllTabs()
     document.getElementById('right_block_new_user_link')
@@ -165,13 +172,6 @@ function new_user_click() {
         document.getElementById('option_new_user_roles_' + i).selected = false
     }
     document.getElementById('new_user_panel').hidden = false
-}
-
-function users_click() {
-    deactivateAndHideAllTabs()
-    document.getElementById('right_block_users_link')
-        .setAttribute('class', 'nav-link active disabled')
-    document.getElementById('users_panel').hidden = false
 }
 
 function roles_click() {
