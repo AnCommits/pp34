@@ -19,7 +19,9 @@ async function saveNewRoleClick() {
         role.id = Number(await response.text())
         createTrTagsForRole(role)
         createOptionTag('new_user_roles', role)
+        setSelectSize('new_user_roles')
         createOptionTag('modal_roles', role)
+        setSelectSize('modal_roles')
         rolesClick()
     } else {
         alert('Ошибка HTTP: ' + response.status)

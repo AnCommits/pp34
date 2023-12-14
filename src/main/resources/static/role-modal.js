@@ -67,19 +67,20 @@ $('#delete-role-button').click(async function () {
         body: JSON.stringify(role)
     })
     if (response.ok) {
-    document.getElementById('option_new_user_roles_' + id).remove()
-    setSizeOfSelectTag('new_user_roles', document.getElementById('new_user_roles').size - 1)
-    document.getElementById('option_modal_roles_' + id).remove()
-    setSizeOfSelectTag('modal_roles', document.getElementById('modal_roles').size - 1)
-
-    const rolesOfAllUsers = document.getElementsByClassName('list-group-item p-0')
-    for (let i = rolesOfAllUsers.length - 1; i >= 0; i--) {
-        if (rolesOfAllUsers[i].textContent === name) {
-            rolesOfAllUsers[i].remove()
+        const rolesOfAllUsers = document.getElementsByClassName('list-group-item p-0')
+        for (let i = rolesOfAllUsers.length - 1; i >= 0; i--) {
+            if (rolesOfAllUsers[i].textContent === name) {
+                rolesOfAllUsers[i].remove()
+            }
         }
-    }
-    document.getElementById('right_block_role_' + id).remove()
-    modal.modal('hide')
+        document.getElementById('right_block_role_' + id).remove()
+
+        document.getElementById('option_new_user_roles_' + id).remove()
+        setSelectSize('new_user_roles')
+        document.getElementById('option_modal_roles_' + id).remove()
+        setSelectSize('modal_roles')
+
+        modal.modal('hide')
     } else {
         alert('Ошибка HTTP: ' + response.status)
     }

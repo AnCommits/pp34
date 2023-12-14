@@ -225,10 +225,10 @@ function hideAllTabsContent() {
 }
 
 function createOptionTags(parentSelectId, allRoles) {
-    setSizeOfSelectTag(parentSelectId, allRoles.length)
     for (let i in allRoles) {
         createOptionTag(parentSelectId, allRoles[i])
     }
+    setSelectSize(parentSelectId)
 }
 
 function createOptionTag(parentSelectId, role) {
@@ -239,6 +239,7 @@ function createOptionTag(parentSelectId, role) {
     document.getElementById(parentSelectId).appendChild(option)
 }
 
-function setSizeOfSelectTag(parentSelectId, allRolesNumber) {
-    document.getElementById(parentSelectId).size = Math.min(6, allRolesNumber)
+function setSelectSize(parentSelectId) {
+    const selectSize = document.getElementsByClassName('right_block_role').length
+    document.getElementById(parentSelectId).size = Math.min(6, selectSize)
 }
