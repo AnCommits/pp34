@@ -70,7 +70,7 @@ function leftBlockUserClick(id) {
     document.getElementById('admin_panel').hidden = true
     document.getElementById('user_info_page').hidden = false
     leftBlockUserClickRebuildLeftBlock(id)
-    deactivateAndHideAllTabs()
+    hideAllTabsContent()
     document.getElementById('right_block_tab_users').hidden = true
     leftBlockUserClickRebuildRightBlock(id)
     document.getElementById('users_panel').hidden = false
@@ -119,11 +119,12 @@ function leftBlockUserClickRebuildRightBlock(id) {
 }
 
 function leftBlockAdminClick() {
+    document.getElementById('user_info_page').hidden = true
+    document.getElementById('admin_panel').hidden = false
     leftBlockUserClickRebuildLeftBlock(0)
-    document.getElementById('right_block_users_link')
-        .setAttribute('class', 'nav-link active disabled')
     document.getElementById('right_block_tab_users').hidden = false
     rightBlockAdminClickRebuildRightBlock()
+    usersClick()
 }
 
 function rightBlockAdminClickRebuildRightBlock() {
@@ -152,14 +153,14 @@ async function lockClick(id) {
 }
 
 function usersClick() {
-    deactivateAndHideAllTabs()
+    deactivateAllTabsAndHideAllTabsContent()
     document.getElementById('right_block_users_link')
         .setAttribute('class', 'nav-link active disabled')
     document.getElementById('users_panel').hidden = false
 }
 
 function newUserClick() {
-    deactivateAndHideAllTabs()
+    deactivateAllTabsAndHideAllTabsContent()
     document.getElementById('right_block_new_user_link')
         .setAttribute('class', 'nav-link active disabled')
 
@@ -178,27 +179,34 @@ function newUserClick() {
 }
 
 function rolesClick() {
-    deactivateAndHideAllTabs()
+    deactivateAllTabsAndHideAllTabsContent()
     document.getElementById('right_block_roles_link')
         .setAttribute('class', 'nav-link active disabled')
     document.getElementById('roles_panel').hidden = false
 }
 
 function newRoleClick() {
-    deactivateAndHideAllTabs()
+    deactivateAllTabsAndHideAllTabsContent()
     document.getElementById('right_block_new_role_link')
         .setAttribute('class', 'nav-link active disabled')
     document.getElementById('name').value = ''
     document.getElementById('new_role_panel').hidden = false
 }
 
-function deactivateAndHideAllTabs() {
+function deactivateAllTabsAndHideAllTabsContent() {
+    deactivateAllTabs()
+    hideAllTabsContent()
+}
+
+function deactivateAllTabs() {
     const navItems = document.getElementById('right_block_tab_users')
         .getElementsByClassName('nav-link')
     for (let i = 0; i < navItems.length; i++) {
         navItems[i].setAttribute('class', 'nav-link')
     }
+}
 
+function hideAllTabsContent() {
     const tabsContents = document.getElementsByClassName('tabsContent')
     for (let i = 0; i < tabsContents.length; i++) {
         tabsContents[i].hidden = true
