@@ -1,12 +1,9 @@
 async function saveNewRoleClick() {
     let id = 0
     const name = document.getElementById('name').value
-    if (name === '') {
-        alert('Поле Название обязательно для заполнения.')
-        return
-    }
-    if (roleExists(name)) {
-        alert('Роль ' + name + ' зарегистрирована. Выберите другое название.')
+    const message = checkRoleName(name)
+    if (message !== '') {
+        alert(message)
         return
     }
     const role = {
@@ -27,6 +24,13 @@ async function saveNewRoleClick() {
     } else {
         alert('Ошибка HTTP: ' + response.status)
     }
+}
+
+function checkRoleName(name) {
+    if (name === '') {
+        return 'Поле Название обязательно для заполнения.'
+    }
+    return roleExists(name) ? ('Роль ' + name + ' уже зарегистрирована. Выберите другое название.') : ''
 }
 
 function roleExists(name) {

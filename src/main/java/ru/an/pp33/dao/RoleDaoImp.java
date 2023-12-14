@@ -1,16 +1,17 @@
 package ru.an.pp33.dao;
 
-import org.hibernate.Hibernate;
+import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 import ru.an.pp33.models.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class RolesDaoImp implements RoleDao{
+public class RoleDaoImp implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -19,6 +20,17 @@ public class RolesDaoImp implements RoleDao{
     public long saveRole(Role role) {
         entityManager.persist(role);
         return getRoleByName(role.getName()).getId();
+    }
+
+    @Override
+    public void updateRole(Role role) {
+        entityManager.merge(role);
+//        String sql = "UPDATE roles SET name =:name WHERE name =:oldname";
+//        Query nativeQuery = entityManager.createNativeQuery(sql);
+//        nativeQuery.setParameter("name", role.getName());
+//        nativeQuery.setParameter("oldname", "123");
+//        int i = nativeQuery.executeUpdate();
+//        System.out.println("------------------------ " + i);
     }
 
     @Override

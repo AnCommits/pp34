@@ -69,7 +69,7 @@ public class AdminRestControllers {
         return String.format("{\"id\": %d, \"password\": \"%s\"}", id, user.getPassword());
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update-user")
     public String updateUser(@RequestBody UserDto userDto, Authentication authentication) {
         User me = (User) authentication.getPrincipal();
         User user = UserMapper.toUser(userDto);
@@ -87,5 +87,11 @@ public class AdminRestControllers {
     public String saveRole(@RequestBody RoleDto roleDto) {
         Role role = RoleMapper.toRole(roleDto);
         return String.valueOf(roleService.saveRole(role));
+    }
+
+    @PutMapping("/update-role")
+    public void updateRole(@RequestBody RoleDto roleDto) {
+        Role role = RoleMapper.toRole(roleDto);
+        roleService.updateRole(role);
     }
 }

@@ -36,8 +36,8 @@ $('#userDialog').on('show.bs.modal', function (event) {
         document.getElementById('modal_roles').disabled = false
     } else {
         document.getElementById('userDialogLabel').textContent = 'Удалить пользователя'
-        document.getElementById('delete-user-button').hidden = false
         document.getElementById('update-user-button').hidden = true
+        document.getElementById('delete-user-button').hidden = false
         document.getElementById('user-firstname').disabled = true
         document.getElementById('user-lastname').disabled = true
         document.getElementById('user-birthdate').disabled = true
@@ -86,7 +86,7 @@ $('#update-user-button').click(async function () {
         descendant: adminStatusChanged
     }
 
-    let response = await fetch('/api/admin/update', {
+    let response = await fetch('/api/admin/update-user', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json; charset=utf-8'},
         body: JSON.stringify(user)
@@ -106,7 +106,6 @@ $('#update-user-button').click(async function () {
         document.getElementById('user_parent_id_' + id).textContent = parentAdminId.toString()
 
         putRolesIntoLiTagsAndCheckAdmin('user_roles_' + id, user)
-
         modal.modal('hide')
     } else {
         alert('Ошибка HTTP: ' + response.status)
@@ -121,9 +120,9 @@ $('#delete-user-button').click(async function () {
         method: 'DELETE'
     })
     if (response.ok) {
-        modal.modal('hide')
         document.getElementById('left_block_user_' + id).remove()
         document.getElementById('right_block_user_' + id).remove()
+        modal.modal('hide')
     } else {
         alert('Ошибка HTTP: ' + response.status)
     }

@@ -23,6 +23,12 @@ public class RoleServiceImp implements RoleService{
         return roleDao.saveRole(role);
     }
 
+    @Transactional
+    @Override
+    public void updateRole(Role role) {
+        roleDao.updateRole(role);
+    }
+
     @Override
     public Role getRoleByName(String name) {
         return roleDao.getRoleByName(name);

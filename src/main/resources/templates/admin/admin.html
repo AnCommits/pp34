@@ -199,13 +199,13 @@
                     <tbody id="right_block_tab_roles">
 
                     <!-- About role -->
-<!--                    <tr class="bg-light" id="right_block_role" hidden>-->
-<!--                        <td id="right_block_role_id"></td>-->
-<!--                        <td id="right_block_role_name"></td>-->
-<!--                        <td>-->
-<!--                            <ul id="right_block_role_users" class="list-group" style="list-style-type: none"></ul>-->
-<!--                        </td>-->
-<!--                    </tr>-->
+                    <!--                    <tr class="bg-light" id="right_block_role" hidden>-->
+                    <!--                        <td id="right_block_role_id"></td>-->
+                    <!--                        <td id="right_block_role_name"></td>-->
+                    <!--                        <td>-->
+                    <!--                            <ul id="right_block_role_users" class="list-group" style="list-style-type: none"></ul>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
 
                     <!--  Roles -->
                     <tr id="right_block_role_tr_template" hidden>
@@ -252,65 +252,63 @@
         <!------------- < < < New role block ------------->
 
     </div>
-    <!------------- < < <   Right block  ------------->
+    <!------------- < < <   Right block ------------->
 
 </main>
 
-<!------------- Modal window > > > ------------->
+<!------------- Modal window for user > > > ------------->
 <div class="modal fade" id="userDialog" tabindex="-1" role="dialog" aria-labelledby="userDialogLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title " id="userDialogLabel"></h5>
+                <h5 class="modal-title" id="userDialogLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <form>
-                    <div class="form-group text-center font-weight-bold py-0 px-4">
-                        <label for="user-id" class="mb-0">ID</label>
-                        <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-id" disabled>
-                    </div>
-                    <div class="form-group text-center font-weight-bold py-0 px-4">
-                        <label for="user-firstname" class="mb-0">Имя*</label>
-                        <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-firstname"
-                               onFocus="this.select()">
-                    </div>
-                    <div class="form-group text-center font-weight-bold py-0 px-4">
-                        <label for="user-lastname" class="mb-0">Фамилия*</label>
-                        <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-lastname"
-                               onFocus="this.select()">
-                    </div>
-                    <div class="form-group text-center font-weight-bold py-0 px-4">
-                        <label for="user-birthdate" class="mb-0">Дата рождения</label>
-                        <input type="date" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-birthdate">
-                    </div>
-                    <div class="form-group text-center font-weight-bold py-0 px-4">
-                        <label for="user-email" class="mb-0">Е-мэйл*</label>
-                        <input type="email" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-email"
-                               onFocus="this.select()">
-                    </div>
-                    <div class="form-group text-center font-weight-bold py-0 px-4" id="user-password-area">
-                        <label for="user-password" class="mb-0">Пароль</label>
-                        <input type="password" class="form-control form-control-sm w-50 my-0 mx-auto"
-                               id="user-password" onFocus="this.select()">
-                    </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="user-id" class="mb-0">ID</label>
+                    <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-id" disabled>
+                </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="user-firstname" class="mb-0">Имя*</label>
+                    <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-firstname"
+                           onFocus="this.select()">
+                </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="user-lastname" class="mb-0">Фамилия*</label>
+                    <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-lastname"
+                           onFocus="this.select()">
+                </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="user-birthdate" class="mb-0">Дата рождения</label>
+                    <input type="date" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-birthdate">
+                </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="user-email" class="mb-0">Е-мэйл*</label>
+                    <input type="email" class="form-control form-control-sm w-50 my-0 mx-auto" id="user-email"
+                           onFocus="this.select()">
+                </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4" id="user-password-area">
+                    <label for="user-password" class="mb-0">Пароль</label>
+                    <input type="password" class="form-control form-control-sm w-50 my-0 mx-auto"
+                           id="user-password" onFocus="this.select()">
+                </div>
 
-                    <div class="d-flex justify-content-center">
-                        <label class="mb-0 font-weight-bold" for="modal_roles">Роли</label>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <select class="form-control w-50" id="modal_roles" name="roles" multiple>
-                            <option class="option" id="option_template_modal_roles" hidden></option>
-                        </select>
-                    </div>
+                <div class="d-flex justify-content-center">
+                    <label class="mb-0 font-weight-bold" for="modal_roles">Роли</label>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <select class="form-control w-50" id="modal_roles" name="roles" multiple>
+                        <option class="option" id="option_template_modal_roles" hidden></option>
+                    </select>
+                </div>
 
-                    <input type="checkbox" id="user-locked" hidden>
-                </form>
+                <input type="checkbox" id="user-locked" hidden>
             </div>
 
             <div class="modal-footer">
@@ -322,7 +320,43 @@
         </div>
     </div>
 </div>
-<!------------- < < < Modal window ------------->
+<!------------- < < < Modal window for user ------------->
+
+<!------------- Modal window for role > > > ------------->
+<div class="modal fade" id="roleDialog" tabindex="-1" role="dialog" aria-labelledby="roleDialogLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="roleDialogLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="role-id" class="mb-0">ID</label>
+                    <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="role-id" disabled>
+                </div>
+                <div class="form-group text-center font-weight-bold py-0 px-4">
+                    <label for="role-name" class="mb-0">Название*</label>
+                    <input type="text" class="form-control form-control-sm w-50 my-0 mx-auto" id="role-name"
+                           onFocus="this.select()">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" id="update-role-button">Сохранить</button>
+                <button type="button" class="btn btn-danger" id="delete-role-button">Удалить</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!------------- < < < Modal window for role ------------->
 
 <span id='my_id' hidden></span>
 
@@ -338,8 +372,9 @@
 
 <script src="start.js"></script>
 <script src="admin.js"></script>
-<script src="modal.js"></script>
 <script src="new-user.js"></script>
-<script src="roles.js"></script>
+<script src="new-role.js"></script>
+<script src="user-modal.js"></script>
+<script src="role-modal.js"></script>
 </body>
 </html>
