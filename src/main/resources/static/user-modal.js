@@ -116,7 +116,7 @@ $('#delete-user-button').click(async function () {
     const modal = $('#userDialog')
     const id = modal.find('#user-id').val()
 
-    const response = await fetch('/api/admin/delete/' + id, {
+    const response = await fetch('/api/admin/delete-user/' + id, {
         method: 'DELETE'
     })
     if (response.ok) {

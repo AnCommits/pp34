@@ -225,8 +225,7 @@ function hideAllTabsContent() {
 }
 
 function createOptionTags(parentSelectId, allRoles) {
-    const select = document.getElementById(parentSelectId)
-    select.size = Math.min(6, allRoles.length)
+    setSizeOfSelectTag(parentSelectId, allRoles.length)
     for (let i in allRoles) {
         createOptionTag(parentSelectId, allRoles[i])
     }
@@ -238,4 +237,8 @@ function createOptionTag(parentSelectId, role) {
     option.textContent = role.name
     option.hidden = false
     document.getElementById(parentSelectId).appendChild(option)
+}
+
+function setSizeOfSelectTag(parentSelectId, allRolesNumber) {
+    document.getElementById(parentSelectId).size = Math.min(6, allRolesNumber)
 }

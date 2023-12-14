@@ -54,7 +54,7 @@ public class AdminRestControllers {
         userService.saveUser(user);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete-user/{id}")
     public void deleteUser(@PathVariable long id) {
         userService.removeUserById(id);
     }

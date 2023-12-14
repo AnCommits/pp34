@@ -47,7 +47,6 @@ $('#update-role-button').click(async function () {
             }
         }
         oldRole.textContent = name
-        rolesClick()
         modal.modal('hide')
     } else {
         alert('Ошибка HTTP: ' + response.status)
@@ -55,27 +54,28 @@ $('#update-role-button').click(async function () {
 });
 
 $('#delete-role-button').click(async function () {
-    // const modal = $('#userDialog')
-    // const id = modal.find('#user-id').val()
-    //
-    // const response = await fetch('/api/admin/delete/' + id, {
+    const modal = $('#roleDialog')
+    const id = modal.find('#role-id').val()
+
+    // const response = await fetch('/api/admin/delete-role/' + id, {
     //     method: 'DELETE'
     // })
     // if (response.ok) {
-    //     document.getElementById('left_block_user_' + id).remove()
-    //     document.getElementById('right_block_user_' + id).remove()
-    //     modal.modal('hide')
+    document.getElementById('option_new_user_roles_' + id).remove()
+    setSizeOfSelectTag('new_user_roles', document.getElementById('new_user_roles').size - 1)
+    document.getElementById('option_modal_roles_' + id).remove()
+    setSizeOfSelectTag('modal_roles', document.getElementById('modal_roles').size - 1)
+
+    const rolesOfAllUsers = document.getElementsByClassName('list-group-item p-0')
+    const roleName = document.getElementById('role_name_' + id)
+    for (let i = rolesOfAllUsers.length - 1; i >= 0; i--) {
+        if (rolesOfAllUsers[i].textContent === roleName.textContent) {
+            rolesOfAllUsers[i].remove()
+        }
+    }
+    document.getElementById('right_block_role_' + id).remove()
+    modal.modal('hide')
     // } else {
     //     alert('Ошибка HTTP: ' + response.status)
     // }
 })
-
-// function oldRolesNamesIncludeAdmin(id) {
-//     const rolesBefore = (document.getElementsByClassName('role_user_' + id))
-//     for (let i = 0; i < rolesBefore.length; i++) {
-//         if (rolesBefore[i].textContent === 'ADMIN') {
-//             return true
-//         }
-//     }
-//     return false
-// }
