@@ -37,34 +37,21 @@ $('#update-role-button').click(async function () {
         body: JSON.stringify(role)
     })
     if (response.ok) {
-        // role.id = Number(await response.text())
-        // createTrTagsForRole(role)
-        // createOptionTag('new_user_roles', role)
-        // createOptionTag('modal_roles', role)
-        // rolesClick()
+        document.getElementById('option_new_user_roles_' + id).textContent = name
+        document.getElementById('option_modal_roles_' + id).textContent = name
+        const rolesOfAllUsers = document.getElementsByClassName('list-group-item p-0')
+        const oldRole = document.getElementById('role_name_' + id)
+        for (let i = 0; i < rolesOfAllUsers.length; i++) {
+            if (rolesOfAllUsers[i].textContent === oldRole.textContent) {
+                rolesOfAllUsers[i].textContent = name
+            }
+        }
+        oldRole.textContent = name
+        rolesClick()
         modal.modal('hide')
     } else {
         alert('Ошибка HTTP: ' + response.status)
     }
-
-    // if (response.ok) {
-    //     password = await response.text()
-    //
-    //     document.getElementById('left_block_user_' + id).textContent = user.firstname + ' ' + user.lastname
-    //
-    //     document.getElementById('user_firstname_' + id).textContent = user.firstname
-    //     document.getElementById('user_lastname_' + id).textContent = user.lastname
-    //     document.getElementById('user_birthdate_' + id).textContent =
-    //         user.birthdate === null ? '' : user.birthdate.substring(0, 10)
-    //     document.getElementById('user_age_' + id).textContent = getAge(birthdate)
-    //     document.getElementById('user_email_' + id).textContent = user.email
-    //     document.getElementById('user_password_' + id).textContent = password
-    //     document.getElementById('user_parent_id_' + id).textContent = parentAdminId.toString()
-    //
-    //     putRolesIntoLiTagsAndCheckAdmin('user_roles_' + id, user)
-    //
-    //     modal.modal('hide')
-    // } else {
 });
 
 $('#delete-role-button').click(async function () {
