@@ -97,4 +97,12 @@ public class AdminRestControllers {
             roleService.updateRole(role);
         }
     }
+
+    @DeleteMapping("/delete-role/{id}")
+    public void deleteRole(@PathVariable long id) {
+        Role roleFromBd = roleService.getRoleById(id);
+        if (!roleFromBd.getName().equals("ADMIN")) {
+            roleService.removeRoleById(id);
+        }
+    }
 }

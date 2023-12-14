@@ -59,4 +59,10 @@ public class RoleDaoImp implements RoleDao {
         TypedQuery<Role> query = entityManager.createQuery(hql, Role.class);
         return query.getResultList();
     }
+
+    @Override
+    public void removeRoleById(Long id) {
+        Role role = entityManager.find(Role.class, id);
+        entityManager.remove(role);
+    }
 }

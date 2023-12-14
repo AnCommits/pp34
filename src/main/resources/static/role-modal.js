@@ -57,10 +57,10 @@ $('#delete-role-button').click(async function () {
     const modal = $('#roleDialog')
     const id = modal.find('#role-id').val()
 
-    // const response = await fetch('/api/admin/delete-role/' + id, {
-    //     method: 'DELETE'
-    // })
-    // if (response.ok) {
+    const response = await fetch('/api/admin/delete-role/' + id, {
+        method: 'DELETE'
+    })
+    if (response.ok) {
     document.getElementById('option_new_user_roles_' + id).remove()
     setSizeOfSelectTag('new_user_roles', document.getElementById('new_user_roles').size - 1)
     document.getElementById('option_modal_roles_' + id).remove()
@@ -75,7 +75,7 @@ $('#delete-role-button').click(async function () {
     }
     document.getElementById('right_block_role_' + id).remove()
     modal.modal('hide')
-    // } else {
-    //     alert('Ошибка HTTP: ' + response.status)
-    // }
+    } else {
+        alert('Ошибка HTTP: ' + response.status)
+    }
 })
