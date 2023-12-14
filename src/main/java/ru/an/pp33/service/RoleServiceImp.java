@@ -3,22 +3,22 @@ package ru.an.pp33.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.an.pp33.dao.RoleDao;
-import ru.an.pp33.dao.UserDao;
 import ru.an.pp33.models.Role;
+import ru.an.pp33.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
 public class RoleServiceImp implements RoleService{
 
     private final RoleDao roleDao;
-    private final UserDao userDao;
+    private final UserService userService;
 
-    public RoleServiceImp(RoleDao roleDao, UserDao userDao) {
+    public RoleServiceImp(RoleDao roleDao, UserService userService) {
         this.roleDao = roleDao;
-        this.userDao = userDao;
+        this.userService = userService;
     }
 
     @Transactional
@@ -50,17 +50,21 @@ public class RoleServiceImp implements RoleService{
 
     @Transactional
     @Override
-    public void removeRoleById(Long id) {
-        // У всех пользователей с ролью с данным id удалить роль.
+    public void removeRoleById(Role role) {
+    // 1-й шаг - У всех пользователей с ролью role удалить роль:
+    //   1-й вариант - получить из БД пользователей с ролью, удалить у каждого роль, сохранить пользователей в БД.
+    //   2-й вариант - в таблице user_role удалить все записи с нужным role_id.
+    // 2-й шаг - удалить роль из БД.
 
-        // Получаем список пользователей с набором ролей, хотя нужно лишь с одной ролью,
+        // Получаем список пользователей с набором ролей, хотя достаточно лишь с одной ролью,
         // т.к. метод getUsersByRoles(List<Role> roles) уже написан.
-        Role role = roleDao.getRoleById(id);
-        Role role = new Role();
-        role.ad
-        List<Role> roles = new ArrayList<>();
-        roles.add(new Role());
-        userDao.getUsersByRoles()
-        roleDao.removeRoleById(id);
+        // 1-й вариант
+        List<User> users = userService.getUsersByRoles(List.of(role));
+        for (User user : users) {
+            Set<Role> roles = user.getRoles();
+            roles.remove(new Role(role.getName()));
+            userService.saveUser(user);
+        }
+        roleDao.removeRoleById(role.getId());
     }
 }

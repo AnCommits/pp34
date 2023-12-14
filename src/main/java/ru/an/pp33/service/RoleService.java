@@ -1,5 +1,6 @@
 package ru.an.pp33.service;
 
+import ru.an.pp33.dto.RoleDto;
 import ru.an.pp33.models.Role;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface RoleService {
 
     List<Role> getAllRoles();
 
-    void removeRoleById(Long id);
+    void removeRoleById(Role role);
 }

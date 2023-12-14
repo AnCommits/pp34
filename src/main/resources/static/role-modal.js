@@ -56,9 +56,15 @@ $('#update-role-button').click(async function () {
 $('#delete-role-button').click(async function () {
     const modal = $('#roleDialog')
     const id = modal.find('#role-id').val()
-
-    const response = await fetch('/api/admin/delete-role/' + id, {
-        method: 'DELETE'
+    const name = document.getElementById('role_name_' + id).textContent
+    const role = {
+        id: id,
+        name: name
+    }
+    const response = await fetch('/api/admin/delete-role', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json; charset=utf-8'},
+        body: JSON.stringify(role)
     })
     if (response.ok) {
     document.getElementById('option_new_user_roles_' + id).remove()
@@ -67,9 +73,8 @@ $('#delete-role-button').click(async function () {
     setSizeOfSelectTag('modal_roles', document.getElementById('modal_roles').size - 1)
 
     const rolesOfAllUsers = document.getElementsByClassName('list-group-item p-0')
-    const roleName = document.getElementById('role_name_' + id)
     for (let i = rolesOfAllUsers.length - 1; i >= 0; i--) {
-        if (rolesOfAllUsers[i].textContent === roleName.textContent) {
+        if (rolesOfAllUsers[i].textContent === name) {
             rolesOfAllUsers[i].remove()
         }
     }

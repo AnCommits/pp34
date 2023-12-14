@@ -91,18 +91,19 @@ public class AdminRestControllers {
 
     @PutMapping("/update-role")
     public void updateRole(@RequestBody RoleDto roleDto) {
-        Role role = RoleMapper.toRole(roleDto);
-        Role roleFromBd = roleService.getRoleById(role.getId());
+        Role roleFromBd = roleService.getRoleById(roleDto.getId());
         if (!roleFromBd.getName().equals("ADMIN")) {
+            Role role = RoleMapper.toRole(roleDto);
             roleService.updateRole(role);
         }
     }
 
-    @DeleteMapping("/delete-role/{id}")
-    public void deleteRole(@PathVariable long id) {
-        Role roleFromBd = roleService.getRoleById(id);
+    @DeleteMapping("/delete-role")
+    public void deleteRole(@RequestBody RoleDto roleDto) {
+        Role roleFromBd = roleService.getRoleById(roleDto.getId());
         if (!roleFromBd.getName().equals("ADMIN")) {
-            roleService.removeRoleById(id);
+            Role role = RoleMapper.toRole(roleDto);
+            roleService.removeRoleById(role);
         }
     }
 }
