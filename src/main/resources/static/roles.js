@@ -20,8 +20,9 @@ async function saveNewRoleClick() {
     })
     if (response.ok) {
         role.id = Number(await response.text())
-        // ToDo Добавить роль на левую панель и в списки нового и редактирования пользователя
         createTrTagsForRole(role)
+        createOptionTag('new_user_roles', role)
+        createOptionTag('modal_roles', role)
         rolesClick()
     } else {
         alert('Ошибка HTTP: ' + response.status)
