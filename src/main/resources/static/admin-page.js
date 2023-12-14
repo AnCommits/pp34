@@ -1,3 +1,14 @@
+window.onload = async function () {
+    const responseMe = await fetch('/api/user/get-me')
+    if (responseMe.ok) {
+        const me = await responseMe.json()
+        putEmailAndRolesInHeader(me)
+        await adminPage(me.id)
+    } else {
+        alert('Ошибка HTTP: ' + responseMe.status)
+    }
+}
+
 async function adminPage(myId) {
     document.getElementById('my_id').textContent = myId
     const responseUsers = await fetch('/api/admin/get-all-users')
