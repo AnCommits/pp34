@@ -1,12 +1,10 @@
 package ru.an.pp33.dao;
 
-import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 import ru.an.pp33.models.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -25,12 +23,20 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public void updateRole(Role role) {
         entityManager.merge(role);
-//        String sql = "UPDATE roles SET name =:name WHERE name =:oldname";
-//        Query nativeQuery = entityManager.createNativeQuery(sql);
-//        nativeQuery.setParameter("name", role.getName());
-//        nativeQuery.setParameter("oldname", "123");
-//        int i = nativeQuery.executeUpdate();
-//        System.out.println("------------------------ " + i);
+    }
+
+    @Override
+    public Role getRoleById(long id) {
+        String hql = "FROM Role r WHERE r.id =:id";
+        TypedQuery<Role> query = entityManager.createQuery(hql, Role.class);
+        query.setParameter("id", id);
+        Role role = null;
+        try {
+            role = query.getSingleResult();
+//            Hibernate.initialize(role.getUsers());
+        } catch (Exception ignored) {
+        }
+        return role;
     }
 
     @Override

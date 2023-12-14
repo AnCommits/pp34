@@ -92,6 +92,9 @@ public class AdminRestControllers {
     @PutMapping("/update-role")
     public void updateRole(@RequestBody RoleDto roleDto) {
         Role role = RoleMapper.toRole(roleDto);
-        roleService.updateRole(role);
+        Role roleFromBd = roleService.getRoleById(role.getId());
+        if (!roleFromBd.getName().equals("ADMIN")) {
+            roleService.updateRole(role);
+        }
     }
 }
