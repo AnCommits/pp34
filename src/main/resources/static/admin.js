@@ -9,7 +9,6 @@ async function adminPage(myId) {
         })
 
         const allRoles = await loadAllRoles()
-        document.getElementById('roles_number').textContent = allRoles.length
         createTrTagsForRoles(allRoles)
         createOptionTags('new_user_roles', allRoles)
         createOptionTags('modal_roles', allRoles)
@@ -169,10 +168,12 @@ function newUserClick() {
     document.getElementById('birthdate').value = ''
     document.getElementById('email').value = ''
     document.getElementById('password').value = ''
-    const rolesNumber = Number(document.getElementById('roles_number').textContent)
-    for (let i = 0; i < rolesNumber; i++) {
-        document.getElementById('option_new_user_roles_' + i).selected = false
+
+    const selectTag = document.getElementById('new_user_roles')
+    for (let i = 0; i < selectTag.length; i++) {
+        selectTag[i].selected = false
     }
+
     document.getElementById('new_user_panel').hidden = false
 }
 
@@ -206,13 +207,16 @@ function deactivateAndHideAllTabs() {
 
 function createOptionTags(parentSelectId, allRoles) {
     const select = document.getElementById(parentSelectId)
-    select.size = Math.min(5, allRoles.length)
-    const option_template = document.getElementById('option_template_' + parentSelectId)
+    select.size = Math.min(6, allRoles.length)
     for (let i in allRoles) {
-        const option = option_template.cloneNode(true)
-        option.id = 'option_' + parentSelectId + '_' + i
-        option.textContent = allRoles[i].name
-        option.hidden = false
-        select.appendChild(option)
+        createOptionTag(parentSelectId, allRoles[i])
     }
+}
+
+function createOptionTag(parentSelectId, role) {
+    const option = document.getElementById('option_template_' + parentSelectId).cloneNode(true)
+    option.id = 'option_' + parentSelectId + '_' + role.id
+    option.textContent = role.name
+    option.hidden = false
+    document.getElementById(parentSelectId).appendChild(option)
 }

@@ -13,15 +13,13 @@ $('#userDialog').on('show.bs.modal', function (event) {
     document.getElementById('user-password').value =
         document.getElementById('user_password_' + id).textContent
 
-    const allRolesNumber = Number(document.getElementById('roles_number').textContent)
     const roles = document.getElementsByClassName('role_user_' + id)
-    for (let i = 0; i < allRolesNumber; i++) {
-        const roleOutOfAll = document.getElementById('option_modal_roles_' + i)
-        roleOutOfAll.selected = false
+    const selectTag = document.getElementById('modal_roles')
+    for (let i = 0; i < selectTag.length; i++) {
+        selectTag[i].selected = false
         for (let j = 0; j < roles.length; j++) {
-            if (roleOutOfAll.textContent === roles[j].textContent) {
-                roleOutOfAll.selected = true
-                break
+            if (selectTag[i].textContent === roles[j].textContent) {
+                selectTag[i].selected = true
             }
         }
     }

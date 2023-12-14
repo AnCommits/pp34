@@ -45,16 +45,16 @@ function createTrTagsForRoles(allRoles) {
 }
 
 function createTrTagsForRole(role) {
-        const newTr = document.createElement('tr')
-        newTr.setAttribute('class', 'right_block_role')
-        newTr.setAttribute('id', 'right_block_role_' + role.name)
-        newTr.innerHTML = document.getElementById('right_block_role_tr_template').innerHTML
-            .replaceAll('template', role.id.toString())
-        document.getElementById('right_block_tab_roles').appendChild(newTr)
-        if (role.name === 'ADMIN') {
-            document.getElementById('role_edit_' + role.id).disabled = true
-            document.getElementById('role_delete_' + role.id).disabled = true
-        }
-        document.getElementById('role_id_' + role.id).textContent = role.id
-        document.getElementById('role_name_' + role.id).textContent = role.name
+    const newTr = document.createElement('tr')
+    newTr.setAttribute('class', 'right_block_role')
+    newTr.setAttribute('id', 'right_block_role_' + role.id)
+    newTr.innerHTML = document.getElementById('right_block_role_tr_template').innerHTML
+        .replaceAll('template', role.id.toString())
+    document.getElementById('right_block_tab_roles').appendChild(newTr)
+    document.getElementById('role_id_' + role.id).textContent = role.id
+    document.getElementById('role_name_' + role.id).textContent = role.name
+    if (role.name === 'ADMIN') {
+        document.getElementById('role_edit_' + role.id).disabled = true
+        document.getElementById('role_delete_' + role.id).disabled = true
+    }
 }
