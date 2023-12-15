@@ -21,8 +21,8 @@ public class RoleDaoImp implements RoleDao {
     }
 
     @Override
-    public void updateRole(Role role) {
-        entityManager.merge(role);
+    public Role updateRole(Role role) {
+        return entityManager.merge(role);
     }
 
     @Override

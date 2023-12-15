@@ -6,7 +6,8 @@ window.onload = async function () {
         putMyNameInLeftBlock(me)
         putMyDataInRightBlock(me)
     } else {
-        alert('Ошибка HTTP: ' + responseMe.status)
+        const error = await responseMe.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 }
 

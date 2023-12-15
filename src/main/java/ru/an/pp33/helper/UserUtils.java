@@ -31,12 +31,16 @@ public class UserUtils {
         return isAncestor(user, user2);
     }
 
-    public void setUsersParentAdminId(User user, User me) {
+    public boolean setUsersParentAdminId(User user, User me) {
         User userBefore = userService.getUser(user.getId());
+        if (userBefore == null) {
+            return false;
+        }
         user.setParentAdminId(
                 hasRoleAdmin(userBefore) != hasRoleAdmin(user)
                         ? me.getId()
                         : userBefore.getParentAdminId());
+        return true;
     }
 
     public static boolean hasRoleAdmin(User user) {

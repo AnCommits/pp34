@@ -22,7 +22,7 @@ public interface UserService {
 
     User getUser(String email);
 
-    void removeUser(Long id);
+    User removeUser(Long id);
 
     long countUsers();
 }

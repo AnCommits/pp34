@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.an.pp33.errors.AppError;
 import ru.an.pp33.models.User;
 
 @RestController
@@ -15,8 +16,10 @@ public class RestControllers {
     @GetMapping("/get-me")
     public ResponseEntity<?> getMyself(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return user == null
-                ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(user, HttpStatus.OK);
+        String message = "Этой ошибки не может быть!";
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
+                : new ResponseEntity<>(
+                new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(), message), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

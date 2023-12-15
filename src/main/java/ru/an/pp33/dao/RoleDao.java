@@ -8,7 +8,7 @@ public interface RoleDao {
 
     long saveRole(Role role);
 
-    void updateRole(Role role);
+    Role updateRole(Role role);
 
     Role getRole(long id);
 

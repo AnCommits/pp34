@@ -19,7 +19,7 @@ public interface UserDao {
 
     User getUser(String email);
 
-    void removeUser(Long id);
+    User removeUser(Long id);
 
     long countUsers();
 

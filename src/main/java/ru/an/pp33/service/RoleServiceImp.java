@@ -30,8 +30,8 @@ public class RoleServiceImp implements RoleService{
 
     @Transactional
     @Override
-    public void updateRole(Role role) {
-        roleDao.updateRole(role);
+    public Role updateRole(Role role) {
+        return roleDao.updateRole(role);
     }
 
     @Override

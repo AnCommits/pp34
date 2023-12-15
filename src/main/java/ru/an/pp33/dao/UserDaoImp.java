@@ -92,10 +92,11 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public void removeUser(Long id) {
+    public User removeUser(Long id) {
         logger.info("removeUserById " + id);
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
+        return user;
     }
 
     @Override
