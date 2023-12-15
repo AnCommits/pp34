@@ -50,16 +50,8 @@ public class RoleServiceImp implements RoleService{
 
     @Transactional
     @Override
-    public void removeRoleById(Role role) {
-    // 1-й шаг - У всех пользователей с ролью role удалить роль:
-    //   1-й вариант - получить из БД пользователей с ролью, удалить у каждого роль, сохранить пользователей в БД.
-    //   2-й вариант - в таблице user_role удалить все записи с нужным role_id.
-    // 2-й шаг - удалить роль из БД.
-
-        // Получаем список пользователей с набором ролей, хотя достаточно лишь с одной ролью,
-        // т.к. метод getUsersByRoles(List<Role> roles) уже написан.
-        // 1-й вариант
-        List<User> users = userService.getUsersByRoles(List.of(role));
+    public void removeRole(Role role) {
+        List<User> users = userService.getUsersByRole(role);
         for (User user : users) {
             Set<Role> roles = user.getRoles();
             roles.remove(new Role(role.getName()));

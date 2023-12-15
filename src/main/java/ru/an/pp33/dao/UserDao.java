@@ -13,11 +13,11 @@ public interface UserDao {
 
     List<User> getAllUsers();
 
+    List<User> getUsersByRole(Role role);
+
     List<User> getUsersByRoles(List<Role> roles);
 
     User getUserByEmail(String email);
-
-//    long updateUser(User user);
 
     void removeUserById(Long id);
 

@@ -35,7 +35,24 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public List<User> getUsersByRole(Role role) {
+        logger.info("getUsersByRole " + role);
+        String sql = "select * from users where id in " +
+                "(select user_id from user_role where role_id = :roleId)";
+        Query query = entityManager.createNativeQuery(sql, User.class);
+        query.setParameter("roleId", role.getId());
+        List<User> users = null;
+        try {
+            users = query.getResultList();
+        } catch (Exception e) {
+            logger.info("getUsersByRole: " + e.getMessage());
+        }
+        return users;
+    }
+
+    @Override
     public List<User> getUsersByRoles(List<Role> roles) {
+        logger.info("getUsersByRoles " + roles);
         String sql = "select * from users where id in " +
                 "(select user_id from user_role where role_id in " +
                 "(select id from roles where name in (:name)))";

@@ -103,7 +103,7 @@ public class AdminRestControllers {
         Role roleFromBd = roleService.getRoleById(roleDto.getId());
         if (!roleFromBd.getName().equals("ADMIN")) {
             Role role = RoleMapper.toRole(roleDto);
-            roleService.removeRoleById(role);
+            roleService.removeRole(role);
         }
     }
 }
