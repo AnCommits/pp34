@@ -24,7 +24,7 @@ public class UserUtils {
         if (parentAdminId1 == user2.getId()) {
             return true;
         }
-        User user = userService.getUserById(parentAdminId1);
+        User user = userService.getUser(parentAdminId1);
         if (user == null) {
             return false;
         }
@@ -32,7 +32,7 @@ public class UserUtils {
     }
 
     public void setUsersParentAdminId(User user, User me) {
-        User userBefore = userService.getUserById(user.getId());
+        User userBefore = userService.getUser(user.getId());
         user.setParentAdminId(
                 hasRoleAdmin(userBefore) != hasRoleAdmin(user)
                         ? me.getId()

@@ -27,8 +27,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userDao.getUserById(id);
+    public User getUser(Long id) {
+        return userDao.getUser(id);
     }
 
     @Override
@@ -37,21 +37,18 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> getUsersByRole(Role role) {
-        return userDao.getUsersByRole(role);
-    }
-
-    /**
-     * @return list of users that have any role in the list
-     */
-    @Override
-    public List<User> getUsersByRoles(List<Role> roles) {
-        return userDao.getUsersByRoles(roles);
+    public List<User> getUsers(Role role) {
+        return userDao.getUsers(role);
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public List<User> getUsers(List<Role> roles) {
+        return userDao.getUsers(roles);
+    }
+
+    @Override
+    public User getUser(String email) {
+        return userDao.getUser(email);
     }
 
     @Transactional
@@ -60,7 +57,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         if (user != null) {
             Set<Role> roles = new HashSet<>();
             for (Role role : user.getRoles()) {
-                Role roleFromDb = roleDao.getRoleByName(role.getName());
+                Role roleFromDb = roleDao.getRole(role.getName());
                 roles.add(roleFromDb);
             }
             user.setRoles(roles);
@@ -71,8 +68,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public void removeUserById(Long id) {
-        userDao.removeUserById(id);
+    public void removeUser(Long id) {
+        userDao.removeUser(id);
     }
 
     @Override
@@ -83,7 +80,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDao.getUserByEmail(email);
+        User user = userDao.getUser(email);
         if (user == null) {
             throw new UsernameNotFoundException(email + " not found");
         }

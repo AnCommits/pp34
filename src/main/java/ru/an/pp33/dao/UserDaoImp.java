@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @Repository
@@ -21,8 +22,8 @@ public class UserDaoImp implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    public User getUserById(Long id) {
-        logger.info("getUserById " + id);
+    public User getUser(Long id) {
+        logger.info("getUser(Long id) " + id);
         return entityManager.find(User.class, id);
     }
 
@@ -35,7 +36,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public List<User> getUsersByRole(Role role) {
+    public List<User> getUsers(Role role) {
         logger.info("getUsersByRole " + role);
         String sql = "select * from users where id in " +
                 "(select user_id from user_role where role_id = :roleId)";
@@ -51,7 +52,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public List<User> getUsersByRoles(List<Role> roles) {
+    public List<User> getUsers(List<Role> roles) {
         logger.info("getUsersByRoles " + roles);
         String sql = "select * from users where id in " +
                 "(select user_id from user_role where role_id in " +
@@ -69,7 +70,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUser(String email) {
         logger.info("getUserByEmail " + email);
         String hql = "FROM User u WHERE u.email =:email";
         TypedQuery<User> query = entityManager.createQuery(hql, User.class);
@@ -91,7 +92,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public void removeUserById(Long id) {
+    public void removeUser(Long id) {
         logger.info("removeUserById " + id);
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
@@ -103,5 +104,23 @@ public class UserDaoImp implements UserDao {
         String hql = "SELECT count(u) FROM User u";
         TypedQuery<Long> query = entityManager.createQuery(hql, Long.class);
         return query.getSingleResult();
+    }
+
+    @Override
+    public void removeRoleFromUsers(Role role) {
+        List<User> users = getUsers(role);
+        for (User user : users) {
+            Set<Role> roles = user.getRoles();
+            roles.remove(new Role(role.getName()));
+            saveUser(user);
+        }
+    }
+
+    @Override
+    public void removeRoleFromUsers(long roleId) {
+        String sql = "DELETE FROM user_role WHERE role_id = :role_id";
+        Query query = entityManager.createNativeQuery(sql, User.class);
+        query.setParameter("role_id", roleId);
+        query.executeUpdate();
     }
 }

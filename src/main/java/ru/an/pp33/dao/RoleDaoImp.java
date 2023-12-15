@@ -17,7 +17,7 @@ public class RoleDaoImp implements RoleDao {
     @Override
     public long saveRole(Role role) {
         entityManager.persist(role);
-        return getRoleByName(role.getName()).getId();
+        return getRole(role.getName()).getId();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class RoleDaoImp implements RoleDao {
     }
 
     @Override
-    public Role getRoleById(long id) {
+    public Role getRole(long id) {
         String hql = "FROM Role r WHERE r.id =:id";
         TypedQuery<Role> query = entityManager.createQuery(hql, Role.class);
         query.setParameter("id", id);
@@ -40,7 +40,7 @@ public class RoleDaoImp implements RoleDao {
     }
 
     @Override
-    public Role getRoleByName(String name) {
+    public Role getRole(String name) {
         String hql = "FROM Role r WHERE r.name =:name";
         TypedQuery<Role> query = entityManager.createQuery(hql, Role.class);
         query.setParameter("name", name);
@@ -61,7 +61,7 @@ public class RoleDaoImp implements RoleDao {
     }
 
     @Override
-    public void removeRoleById(Long id) {
+    public void removeRole(long id) {
         Role role = entityManager.find(Role.class, id);
         entityManager.remove(role);
     }

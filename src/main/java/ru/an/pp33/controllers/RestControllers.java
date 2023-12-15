@@ -1,5 +1,7 @@
 package ru.an.pp33.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,10 @@ import ru.an.pp33.models.User;
 public class RestControllers {
 
     @GetMapping("/get-me")
-    public User getMyself(Authentication authentication) {
-        return (User) authentication.getPrincipal();
+    public ResponseEntity<?> getMyself(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return user == null
+                ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

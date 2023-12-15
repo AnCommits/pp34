@@ -61,10 +61,8 @@ $('#delete-role-button').click(async function () {
         id: id,
         name: name
     }
-    const response = await fetch('/api/admin/delete-role', {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json; charset=utf-8'},
-        body: JSON.stringify(role)
+    const response = await fetch('/api/admin/delete-role/' + id, {
+        method: 'DELETE'
     })
     if (response.ok) {
         const rolesOfAllUsers = document.getElementsByClassName('list-group-item p-0')

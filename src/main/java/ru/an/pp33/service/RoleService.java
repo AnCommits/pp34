@@ -10,11 +10,13 @@ public interface RoleService {
 
     void updateRole(Role role);
 
-    Role getRoleById(long id);
+    Role getRole(long id);
 
-    Role getRoleByName(String name);
+    Role getRole(String name);
 
     List<Role> getAllRoles();
 
     void removeRole(Role role);
+
+    void removeRole(long id);
 }

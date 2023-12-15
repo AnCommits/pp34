@@ -9,17 +9,20 @@ public interface UserService {
 
     long saveUser(User user);
 
-    User getUserById(Long id);
+    User getUser(Long id);
 
     List<User> getAllUsers();
 
-    List<User> getUsersByRole(Role role);
+    List<User> getUsers(Role role);
 
-    List<User> getUsersByRoles(List<Role> roles);
+    /**
+     * @return list of users that have any role in the list
+     */
+    List<User> getUsers(List<Role> roles);
 
-    User getUserByEmail(String email);
+    User getUser(String email);
 
-    void removeUserById(Long id);
+    void removeUser(Long id);
 
     long countUsers();
 }

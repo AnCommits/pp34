@@ -49,14 +49,14 @@ public class AdminRestControllers {
 
     @PutMapping("/lock/{id}")
     public void lockUser(@PathVariable long id, @RequestBody String lock) {
-        User user = userService.getUserById(id);
+        User user = userService.getUser(id);
         user.setLocked(Boolean.parseBoolean(lock));
         userService.saveUser(user);
     }
 
     @DeleteMapping("/delete-user/{id}")
     public void deleteUser(@PathVariable long id) {
-        userService.removeUserById(id);
+        userService.removeUser(id);
     }
 
     @PostMapping("/save-user")
@@ -73,7 +73,7 @@ public class AdminRestControllers {
     public String updateUser(@RequestBody UserDto userDto, Authentication authentication) {
         User me = (User) authentication.getPrincipal();
         User user = UserMapper.toUser(userDto);
-        String oldPassword = userService.getUserById(user.getId()).getPassword();
+        String oldPassword = userService.getUser(user.getId()).getPassword();
         if (!oldPassword.equals(user.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
@@ -91,19 +91,18 @@ public class AdminRestControllers {
 
     @PutMapping("/update-role")
     public void updateRole(@RequestBody RoleDto roleDto) {
-        Role roleFromBd = roleService.getRoleById(roleDto.getId());
+        Role roleFromBd = roleService.getRole(roleDto.getId());
         if (!roleFromBd.getName().equals("ADMIN")) {
             Role role = RoleMapper.toRole(roleDto);
             roleService.updateRole(role);
         }
     }
 
-    @DeleteMapping("/delete-role")
-    public void deleteRole(@RequestBody RoleDto roleDto) {
-        Role roleFromBd = roleService.getRoleById(roleDto.getId());
+    @DeleteMapping("/delete-role/{id}")
+    public void deleteRole(@PathVariable long id) {
+        Role roleFromBd = roleService.getRole(id);
         if (!roleFromBd.getName().equals("ADMIN")) {
-            Role role = RoleMapper.toRole(roleDto);
-            roleService.removeRole(role);
+            roleService.removeRole(id);
         }
     }
 }

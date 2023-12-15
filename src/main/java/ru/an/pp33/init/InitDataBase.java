@@ -31,7 +31,7 @@ public class InitDataBase {
             roleService.saveRole(new Role("USER"));
         }
         if (userService.countUsers() == 0) {
-            Role role1 = roleService.getRoleByName("ADMIN");
+            Role role1 = roleService.getRole("ADMIN");
             Set<Role> roles = new HashSet<>();
             roles.add(role1);
             User user = new User("-", "-", "1",

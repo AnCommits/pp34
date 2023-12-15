@@ -3,6 +3,7 @@ package ru.an.pp33.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.an.pp33.dao.RoleDao;
+import ru.an.pp33.dao.UserDao;
 import ru.an.pp33.models.Role;
 import ru.an.pp33.models.User;
 
@@ -14,11 +15,11 @@ import java.util.Set;
 public class RoleServiceImp implements RoleService{
 
     private final RoleDao roleDao;
-    private final UserService userService;
+    private final UserDao userDao;
 
-    public RoleServiceImp(RoleDao roleDao, UserService userService) {
+    public RoleServiceImp(RoleDao roleDao, UserDao userDao) {
         this.roleDao = roleDao;
-        this.userService = userService;
+        this.userDao = userDao;
     }
 
     @Transactional
@@ -34,13 +35,13 @@ public class RoleServiceImp implements RoleService{
     }
 
     @Override
-    public Role getRoleById(long id) {
-        return roleDao.getRoleById(id);
+    public Role getRole(long id) {
+        return roleDao.getRole(id);
     }
 
     @Override
-    public Role getRoleByName(String name) {
-        return roleDao.getRoleByName(name);
+    public Role getRole(String name) {
+        return roleDao.getRole(name);
     }
 
     @Override
@@ -51,12 +52,14 @@ public class RoleServiceImp implements RoleService{
     @Transactional
     @Override
     public void removeRole(Role role) {
-        List<User> users = userService.getUsersByRole(role);
-        for (User user : users) {
-            Set<Role> roles = user.getRoles();
-            roles.remove(new Role(role.getName()));
-            userService.saveUser(user);
-        }
-        roleDao.removeRoleById(role.getId());
+        userDao.removeRoleFromUsers(role);
+        roleDao.removeRole(role.getId());
+    }
+
+    @Transactional
+    @Override
+    public void removeRole(long id) {
+        userDao.removeRoleFromUsers(id);
+        roleDao.removeRole(id);
     }
 }
