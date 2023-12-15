@@ -108,7 +108,8 @@ $('#update-user-button').click(async function () {
         putRolesIntoLiTagsAndCheckAdmin('user_roles_' + id, user)
         modal.modal('hide')
     } else {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 });
 
@@ -124,7 +125,8 @@ $('#delete-user-button').click(async function () {
         document.getElementById('right_block_user_' + id).remove()
         modal.modal('hide')
     } else {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 })
 

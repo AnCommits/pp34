@@ -39,7 +39,8 @@ async function saveNewUserClick() {
         putUserInRightBlock(user, Number(document.getElementById('my_id')))
         usersClick()
     } else {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 }
 

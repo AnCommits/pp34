@@ -24,7 +24,8 @@ async function saveNewRoleClick() {
         setSelectSize('modal_roles')
         rolesClick()
     } else {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 }
 

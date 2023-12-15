@@ -5,7 +5,8 @@ window.onload = async function () {
         putEmailAndRolesInHeader(me)
         await adminPage(me.id)
     } else {
-        alert('Ошибка HTTP: ' + responseMe.status)
+        const error = await responseMe.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 }
 
@@ -24,7 +25,8 @@ async function adminPage(myId) {
         createOptionTags('new_user_roles', allRoles)
         createOptionTags('modal_roles', allRoles)
     } else {
-        alert('Ошибка HTTP: ' + responseUsers.status)
+        const error = await responseUsers.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 }
 
@@ -72,7 +74,8 @@ async function loadAllRoles() {
     if (responseRoles.ok) {
         return await responseRoles.json()
     } else {
-        alert('Ошибка HTTP: ' + responseRoles.status)
+        const error = await responseRoles.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
         return null
     }
 }
@@ -159,7 +162,8 @@ async function lockClick(id) {
         body: document.getElementById('user_locked_' + id).checked
     })
     if (!response.ok) {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 }
 

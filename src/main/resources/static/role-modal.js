@@ -49,7 +49,8 @@ $('#update-role-button').click(async function () {
         oldRole.textContent = name
         modal.modal('hide')
     } else {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 });
 
@@ -80,6 +81,7 @@ $('#delete-role-button').click(async function () {
 
         modal.modal('hide')
     } else {
-        alert('Ошибка HTTP: ' + response.status)
+        const error = await response.json()
+        alert(error.message + '\n' + 'Код - ' + error.code)
     }
 })
