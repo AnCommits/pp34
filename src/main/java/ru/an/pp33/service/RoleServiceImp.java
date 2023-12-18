@@ -5,10 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.an.pp33.dao.RoleDao;
 import ru.an.pp33.dao.UserDao;
 import ru.an.pp33.models.Role;
-import ru.an.pp33.models.User;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)

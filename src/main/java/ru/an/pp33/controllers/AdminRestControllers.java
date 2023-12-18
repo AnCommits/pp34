@@ -23,11 +23,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminRestControllers {
-    private final static String ERROR_LOAD_USERS = "Ошибка при получении пользователей из базы!";
-    private final static String ERROR_LOAD_USER = "Ошибка при получении пользователя из базы!";
+    private final static String USERS_NOT_FOUND = "Пользователи не найдены!";
+    private final static String USER_NOT_FOUND = "Пользователь не найдены!";
+    private final static String ROLES_NOT_FOUND = "Роли не найдены!";
+    private final static String ROLE_NOT_FOUND = "Роли не найдены!";
+
     private final static String ERROR_SAVE_USER = "Ошибка при записи пользователя в базу!";
     private final static String ERROR_LOAD_ROLE = "Ошибка при получении роли из базы!";
     private final static String ERROR_SAVE_ROLE = "Ошибка при записи роли в базу!";
+
+    private final static String INTERNAL_ERROR = "Внутренняя ошибка сервера";
+
 
     private final UserService userService;
     private final RoleService roleService;
@@ -50,40 +56,36 @@ public class AdminRestControllers {
             users.forEach(u -> u.setDescendant(userUtils.isAncestor(u, me)));
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
-        return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), ERROR_LOAD_USERS), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), USERS_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all-roles")
     public ResponseEntity<?> getAllRoles() {
         List<Role> roles = roleService.getAllRoles();
-        String message = "Ошибка при получении ролей из базы!";
         return roles != null
                 ? new ResponseEntity<>(roles, HttpStatus.OK)
-                : new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), message), HttpStatus.NOT_FOUND);
+                : new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), ROLES_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/lock/{id}")
     public ResponseEntity<?> lockUser(@PathVariable long id, @RequestBody String lock) {
         User user = userService.getUser(id);
         if (user == null) {
-            return new ResponseEntity<>(
-                    new AppError(HttpStatus.NOT_FOUND.value(), ERROR_LOAD_USER), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), USER_NOT_FOUND), HttpStatus.NOT_FOUND);
         }
         user.setLocked(Boolean.parseBoolean(lock));
         return userService.saveUser(user) > 0
                 ? new ResponseEntity<>("", HttpStatus.OK)
-                : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ERROR_SAVE_USER), HttpStatus.INTERNAL_SERVER_ERROR);
+                : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(), INTERNAL_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable long id) {
         User user = userService.removeUser(id);
-        String message = "Ошибка при удалении пользователя из базы!";
         return user != null
                 ? new ResponseEntity<>("", HttpStatus.OK)
                 : new ResponseEntity<>(
-                new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(), message), HttpStatus.INTERNAL_SERVER_ERROR);
+                new AppError(HttpStatus.NOT_FOUND.value(), USER_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/save-user")
@@ -97,7 +99,7 @@ public class AdminRestControllers {
                 ? new ResponseEntity<>(
                 String.format("{\"id\": %d, \"password\": \"%s\"}", id, user.getPassword()), HttpStatus.OK)
                 : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ERROR_SAVE_USER), HttpStatus.INTERNAL_SERVER_ERROR);
+                INTERNAL_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PutMapping("/update-user")
@@ -109,13 +111,13 @@ public class AdminRestControllers {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         if (!userUtils.setUsersParentAdminId(user, me)) {
-            return new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    ERROR_LOAD_USER), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
+                    USER_NOT_FOUND), HttpStatus.NOT_FOUND);
         }
         return userService.saveUser(user) > 0
                 ? new ResponseEntity<>(user.getPassword(), HttpStatus.OK)
                 : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ERROR_SAVE_USER), HttpStatus.INTERNAL_SERVER_ERROR);
+                INTERNAL_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/save-role")
@@ -125,15 +127,15 @@ public class AdminRestControllers {
         return id > 0
                 ? new ResponseEntity<>(String.valueOf(id), HttpStatus.OK)
                 : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ERROR_SAVE_ROLE), HttpStatus.INTERNAL_SERVER_ERROR);
+                INTERNAL_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PutMapping("/update-role")
     public ResponseEntity<?> updateRole(@RequestBody RoleDto roleDto) {
         Role roleFromBd = roleService.getRole(roleDto.getId());
         if (roleFromBd == null) {
-            return new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    ERROR_LOAD_ROLE), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
+                    ROLE_NOT_FOUND), HttpStatus.NOT_FOUND);
         }
         if (roleFromBd.getName().equals("ADMIN")) {
             String message = "Отказ в переименовании роли ADMIN!";
@@ -151,8 +153,8 @@ public class AdminRestControllers {
     public ResponseEntity<?> deleteRole(@PathVariable long id) {
         Role roleFromBd = roleService.getRole(id);
         if (roleFromBd == null) {
-            return new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    ERROR_LOAD_ROLE), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
+                    ROLE_NOT_FOUND), HttpStatus.NOT_FOUND);
         }
         String message = "Отказ в удалении роли ADMIN!";
         return roleFromBd.getName().equals("ADMIN")

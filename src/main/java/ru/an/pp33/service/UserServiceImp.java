@@ -17,7 +17,6 @@ import java.util.Set;
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImp implements UserService, UserDetailsService {
-
     private final UserDao userDao;
     private final RoleDao roleDao;
 
