@@ -3,7 +3,7 @@ package ru.an.pp33.controllers;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.an.pp33.dto.RoleDto;
 import ru.an.pp33.dto.UserDto;
@@ -40,9 +40,9 @@ public class AdminRestControllers {
     }
 
     @GetMapping("/get-all-users")
-    public ResponseEntity<?> getAllUsers(Authentication authentication) {
+    public ResponseEntity<?> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        User me = (User) authentication.getPrincipal();
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (users != null) {
             users.forEach(u -> u.setDescendant(userUtils.isAncestor(u, me)));
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -80,8 +80,8 @@ public class AdminRestControllers {
     }
 
     @PostMapping("/save-user")
-    public ResponseEntity<?> saveUser(@RequestBody UserDto userDto, Authentication authentication) {
-        User me = (User) authentication.getPrincipal();
+    public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = UserMapper.toUser(userDto);
         user.setParentAdminId(me.getId());
         long id = userService.saveUser(user);
@@ -93,8 +93,8 @@ public class AdminRestControllers {
     }
 
     @PutMapping("/update-user")
-    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, Authentication authentication) {
-        User me = (User) authentication.getPrincipal();
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = UserMapper.toUser(userDto);
         if (!userUtils.setUsersParentAdminId(user, me)) {
             return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
