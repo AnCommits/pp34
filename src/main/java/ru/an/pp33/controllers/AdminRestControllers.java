@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.an.pp33.dto.RoleDto;
 import ru.an.pp33.dto.UserDto;
@@ -28,24 +27,16 @@ public class AdminRestControllers {
     private final static String ROLES_NOT_FOUND = "Роли не найдены!";
     private final static String ROLE_NOT_FOUND = "Роли не найдены!";
 
-    private final static String ERROR_SAVE_USER = "Ошибка при записи пользователя в базу!";
-    private final static String ERROR_LOAD_ROLE = "Ошибка при получении роли из базы!";
-    private final static String ERROR_SAVE_ROLE = "Ошибка при записи роли в базу!";
-
     private final static String INTERNAL_ERROR = "Внутренняя ошибка сервера";
-
 
     private final UserService userService;
     private final RoleService roleService;
     private final UserUtils userUtils;
-    private final PasswordEncoder passwordEncoder;
 
-    public AdminRestControllers(UserService userService, RoleService roleService,
-                                UserUtils userUtils, PasswordEncoder passwordEncoder) {
+    public AdminRestControllers(UserService userService, RoleService roleService, UserUtils userUtils) {
         this.userService = userService;
         this.roleService = roleService;
         this.userUtils = userUtils;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/get-all-users")
@@ -92,7 +83,6 @@ public class AdminRestControllers {
     public ResponseEntity<?> saveUser(@RequestBody UserDto userDto, Authentication authentication) {
         User me = (User) authentication.getPrincipal();
         User user = UserMapper.toUser(userDto);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setParentAdminId(me.getId());
         long id = userService.saveUser(user);
         return id > 0
@@ -106,15 +96,11 @@ public class AdminRestControllers {
     public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, Authentication authentication) {
         User me = (User) authentication.getPrincipal();
         User user = UserMapper.toUser(userDto);
-        String oldPassword = userService.getUser(user.getId()).getPassword();
-        if (!oldPassword.equals(user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
         if (!userUtils.setUsersParentAdminId(user, me)) {
             return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
                     USER_NOT_FOUND), HttpStatus.NOT_FOUND);
         }
-        return userService.saveUser(user) > 0
+        return userService.updateUser(user) > 0
                 ? new ResponseEntity<>(user.getPassword(), HttpStatus.OK)
                 : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 INTERNAL_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -146,7 +132,7 @@ public class AdminRestControllers {
         return roleService.updateRole(role) != null
                 ? new ResponseEntity<>("", HttpStatus.OK)
                 : new ResponseEntity<>(new AppError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ERROR_SAVE_ROLE), HttpStatus.INTERNAL_SERVER_ERROR);
+                INTERNAL_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @DeleteMapping("/delete-role/{id}")

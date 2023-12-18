@@ -1,6 +1,5 @@
 package ru.an.pp33.init;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.an.pp33.models.Role;
 import ru.an.pp33.models.User;
@@ -8,19 +7,19 @@ import ru.an.pp33.service.RoleService;
 import ru.an.pp33.service.UserService;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class InitDataBase {
 
     private final RoleService roleService;
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
-    public InitDataBase(RoleService roleService, UserService userService, PasswordEncoder passwordEncoder) {
+    public InitDataBase(RoleService roleService, UserService userService) {
         this.roleService = roleService;
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -34,9 +33,7 @@ public class InitDataBase {
             Role role1 = roleService.getRole("ADMIN");
             Set<Role> roles = new HashSet<>();
             roles.add(role1);
-            User user = new User("-", "-", "1",
-                    passwordEncoder.encode("1"),
-                    null, roles, false);
+            User user = new User("-", "-", "1", "1",null, roles, false);
             userService.saveUser(user);
         }
     }

@@ -1,11 +1,9 @@
 package ru.an.pp33.service;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.an.pp33.dao.RoleDao;
@@ -22,46 +20,42 @@ import java.util.Set;
 public class UserServiceImp implements UserService, UserDetailsService {
     private final UserDao userDao;
     private final RoleDao roleDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImp(UserDao userDao, RoleDao roleDao) {
+    public UserServiceImp(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    @Cacheable("users")
     public User getUser(Long id) {
         return userDao.getUser(id);
     }
 
     @Override
-    @Cacheable("users")
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 
     @Override
-    @Cacheable("users")
     public List<User> getUsers(Role role) {
         return userDao.getUsers(role);
     }
 
     @Override
-    @Cacheable("users")
     public List<User> getUsers(List<Role> roles) {
         return userDao.getUsers(roles);
     }
 
     @Override
-    @Cacheable("users")
     public User getUser(String email) {
         return userDao.getUser(email);
     }
 
     @Transactional
     @Override
-    @CachePut("users")
-    public long saveUser(User user) {
+    public long saveUser(User user, boolean... methodUpdate) {
         if (user != null) {
             Set<Role> roles = new HashSet<>();
             for (Role role : user.getRoles()) {
@@ -69,6 +63,16 @@ public class UserServiceImp implements UserService, UserDetailsService {
                 roles.add(roleFromDb);
             }
             user.setRoles(roles);
+
+            if (methodUpdate.length == 0) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            } else {
+                String oldPassword = userDao.getUser(user.getId()).getPassword();
+                if (!oldPassword.equals(user.getPassword())) {
+                    user.setPassword(passwordEncoder.encode(user.getPassword()));
+                }
+            }
+
             return userDao.saveUser(user);
         }
         return -1;
@@ -76,7 +80,12 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    @CacheEvict("users")
+    public long updateUser(User user) {
+        return saveUser(user, true);
+    }
+
+    @Transactional
+    @Override
     public User removeUser(Long id) {
         return userDao.removeUser(id);
     }
@@ -88,7 +97,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    @Cacheable("users")
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userDao.getUser(email);
         if (user == null) {
